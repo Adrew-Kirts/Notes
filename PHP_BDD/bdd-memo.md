@@ -77,13 +77,30 @@ Les clés primaires dans un modèle de données relationnel (MCD) sont des colon
 
 Toutes les entités vont devenir une table
 
-Les associations de type "1, n" sont traduites par des clés étrangères 
-Les associations de tpye "n, n" sont traduites par une (nouvelle) table intermédiaire (avec comme nom "table1 au pluriel_table2 au pluriel, avec les noms dans l'ordre alphabétique comme convention)
+**Propriété**: Une propriété devient un attribut.
+
+**Individu**: Un individu devient une relation (minimum en 3ème forme normale).
+
+**Identifiant**: L'identifiant d'un individu devient la clé primaire de la relation correspondante.
+
+**Association sans propriétés propres**
+
+    Cardinalités (0,1) ou (1,1) vers (0,n) ou (1,n) : L'association disparaît et la clé de la relation relative à la cardinalité (0,n) ou (1,n) migre vers la relation relative à la cardinalité (0,1) ou (1,1). Cette clé est appelé "clé étrangère". La clé étrangère va se situer du côté de (0,1) ou (1,1), fait une réferencé à l'entité lié.
+
+    Cardinalités (n) vers (n) = création de table intermédiaire
 
 
-## 1.2
+## 1.2 - Mise en pratique MCD et MLD
+
 
 **MCD Twitter**
 
 ![MCD Twitter](./twitter_drawio_mcd.png)
+
+
+**MLD Twitter**
+
+![MCD Twitter](./twitter_MLD.png)
+
+
 
