@@ -1,12 +1,13 @@
-# MEMO -  Base De Données
+# MEMO - Base De Données
 
->Réponses aux questions du module PHP/BDD
+> Réponses aux questions du module PHP/BDD
 
 ## 1.1
 
 De manière général :
 
 - Qu’est ce qu’un SGBD ?
+  Un système de gestion de base de données (SGBD) est le logiciel qui permet à un ordinateur de stocker, récupérer, ajouter, supprimer et modifier des données.
 
 - Qu’est-ce qu’un système d’information ?
 
@@ -15,6 +16,7 @@ De manière général :
 - Citez les différences entre ces éléments.
 
 Pour un MCD (Modèle Conceptuel de Données) :
+
 - Qu’est ce qu’un MCD et pourquoi est-ce que cela existe ?
 
 - Comment représenter une entité ?
@@ -30,5 +32,5 @@ Pour un MCD (Modèle Conceptuel de Données) :
 - A quoi servent les clés primaires ?
 
 Pour un MLD (Modèle Logique de Données) :
-- Comment passer d'un MCD au MLD ? Que deviennent les associations ?
 
+- Comment passer d'un MCD au MLD ? Que deviennent les associations ?
