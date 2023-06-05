@@ -103,4 +103,9 @@ Toutes les entités vont devenir une table
 ![MCD Twitter](./twitter_MLD.png)
 
 
+## 1.3 - Mise en pratique avec le dataset du module : le prix des stations essence
+
+
+
+
 
