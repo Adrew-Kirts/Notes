@@ -2,6 +2,8 @@
 
 > Réponses aux questions du module PHP/BDD
 
+
+
 ## 1.1 MCD et MLD
 
 **De manière général :**
@@ -77,3 +79,11 @@ Toutes les entités vont devenir une table
 
 Les associations de type "1, n" sont traduites par des clés étrangères 
 Les associations de tpye "n, n" sont traduites par une (nouvelle) table intermédiaire (avec comme nom "table1 au pluriel_table2 au pluriel, avec les noms dans l'ordre alphabétique comme convention)
+
+
+## 1.2
+
+**MCD Twitter**
+
+![MCD Twitter](./twitter_drawio_mcd.png)
+
