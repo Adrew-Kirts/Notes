@@ -225,7 +225,9 @@ Pour insérer des données dans une table, vous pouvez utiliser la commande INSE
 
 ```sql
 INSERT INTO my_table (column1, column2, ...)
-VALUES (value1, value2, ...);
+VALUES (
+    value1, 
+    value2, ...);
 ```
 
 Vous devez spécifier les noms des colonnes et les valeurs correspondantes dans l'ordre approprié.
@@ -239,6 +241,16 @@ SELECT * FROM my_table;
 ```
 
 Cela récupérera toutes les lignes et colonnes de la table "my_table". Vous pouvez également spécifier des conditions et des colonnes spécifiques pour affiner votre sélection.
+
+```sql
+SELECT email, id, country FROM my_table;
+-- Retourne que les résultâts ou country = US
+WHERE country = 'US';
+-- Retourne les résultâts en ordre ascendant
+ORDER BY id ASC;
+-- Retourne une limite de 4 lignes
+LIMIT 4;
+```
 
 **- Comment ne sélectionner qu'un certain nombre de résultats ?**
 
@@ -306,6 +318,43 @@ SELECT * FROM table1 JOIN table2 ON table1.column_name = table2.column_name;
 
 Cela sélectionnera les données des tables "table1" et "table2" en combinant les lignes où les valeurs de la colonne "column_name" sont égales dans les deux tables.
 
+    INNER JOIN: An INNER JOIN returns only the rows where there is a match between the columns being joined in both tables. It combines the matching rows from both tables into a result set. Here's an example:
+
+```sql
+SELECT *
+FROM table1
+INNER JOIN table2 ON table1.column_name = table2.column_name;
+```
+In this case, only the rows with matching values in the column_name between table1 and table2 will be included in the result set. Rows from either table that don't have a match will be excluded.
+
+    OUTER JOIN: An OUTER JOIN includes the matching rows from the tables being joined and also includes the unmatched rows from one or both tables. There are three types of outer joins: LEFT OUTER JOIN, RIGHT OUTER JOIN, and FULL OUTER JOIN.
+
+    LEFT OUTER JOIN: Returns all the rows from the left (first) table and the matching rows from the right (second) table. If there is no match, NULL values are included for the columns of the right table. Example:
+
+```sql
+SELECT *
+FROM table1
+LEFT OUTER JOIN table2 ON table1.column_name = table2.column_name;
+```
+
+    RIGHT OUTER JOIN: Returns all the rows from the right (second) table and the matching rows from the left (first) table. If there is no match, NULL values are included for the columns of the left table. Example:
+
+```sql
+SELECT *
+FROM table1
+RIGHT OUTER JOIN table2 ON table1.column_name = table2.column_name;
+```
+
+    FULL OUTER JOIN: Returns all the rows from both tables, including the matching and unmatched rows. If there is no match, NULL values are included for the columns of the table without a match. Example:
+
+```sql
+SELECT *
+FROM table1
+FULL OUTER JOIN table2 ON table1.column_name = table2.column_name;
+```
+
+It's important to note that the specific syntax and support for these join types may vary depending on the database management system (DBMS) you are using.
+
 **- Comment ne sélectionner que certaines colonnes et les renommer dans la liste de résultats ?**
 
 Pour ne sélectionner que certaines colonnes et les renommer dans la liste de résultats, vous pouvez spécifier les noms des colonnes séparés par des virgules dans votre requête SELECT. Vous pouvez également utiliser l'opérateur "AS" pour renommer les colonnes. Par exemple :
@@ -333,3 +382,17 @@ DROP DATABASE my_database;
 ```
 
 Cela supprimera complètement la base de données "my_database" et toutes les tables qui y sont associées.
+
+
+**- Qu’est-ce SQLite et ses avantages.**
+
+SQLite est une base de données relationnelle de type SQL (Structured Query Language) qui est souvent utilisée pour stocker et récupérer des données de manière efficace. Elle est souvent utilisée dans les applications mobiles, les applications web et les applications de bureau.
+
+Les avantage de SQLite: 
+
+- Facilité d'utilisation
+- Grande flexibilité
+- Sécurité
+- Performance
+- Portabilité
+
