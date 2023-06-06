@@ -105,6 +105,7 @@ Toutes les entités vont devenir une table
 
 ## 1.3 - Mise en pratique avec le dataset du module : le prix des stations essence
 
+![MCD et MLD Station Essence](./station_essence_mld_and_mcd.png)
 
 
 
