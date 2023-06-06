@@ -115,7 +115,6 @@ Toutes les entités vont devenir une table
 Dans le terminal: 
 
 '''sql
-
 CREATE DATABASE nom_de_la_base_de_données;
 '''
 
@@ -124,14 +123,12 @@ Remplacez "nom_de_la_base_de_données" par le nom que vous souhaitez donner à v
 **- Comment faire un commentaire ?**
 
 '''sql
-
 -- Ceci est un commentaire en SQL
 '''
 
 Vous pouvez également utiliser la syntaxe des commentaires multi-lignes en fonction de votre système de gestion de base de données. Par exemple :
 
 '''sql
-
 /* Ceci est un commentaire
 sur plusieurs lignes */
 '''
@@ -140,7 +137,6 @@ sur plusieurs lignes */
 Pour créer une table avec des colonnes, vous pouvez utiliser la commande CREATE TABLE suivie du nom de la table et de la liste des colonnes avec leurs types de données. Voici un exemple générique :
 
 '''sql
-
 CREATE TABLE nom_de_la_table (
     nom_colonne1 type_de_données,
     nom_colonne2 type_de_données,
@@ -151,7 +147,6 @@ CREATE TABLE nom_de_la_table (
 Voici un exemple concret de création d'une table "utilisateurs" avec les colonnes "id", "nom" et "email" :
 
 '''sql
-
 CREATE TABLE utilisateurs (
     id INT,
     nom VARCHAR(50),
@@ -185,7 +180,6 @@ Quelques contraintes utiles pour les colonnes sont :
 Pour préciser qu'une valeur est obligatoire pour une colonne, vous pouvez utiliser la contrainte NOT NULL lors de la création de la table. Par exemple :
 
 '''sql
-
 CREATE TABLE my_table (
     column_name INT NOT NULL,
     ...
@@ -196,7 +190,6 @@ CREATE TABLE my_table (
 Pour définir l'id d'une table, vous pouvez utiliser le type de données INTEGER et la contrainte PRIMARY KEY lors de la création de la table. Par exemple :
 
 '''sql
-
 CREATE TABLE my_table (
     id INT PRIMARY KEY,
     ...
@@ -211,7 +204,6 @@ Il faut que l'id soit unique et pas null et il est courant d'utiliser un id auto
 Pour préciser que la valeur d'une colonne doit être unique, vous pouvez utiliser la contrainte UNIQUE lors de la création de la table. Par exemple, pour une colonne "email" contenant des adresses email :
 
 '''sql
-
 CREATE TABLE my_table (
     email VARCHAR(255) UNIQUE,
     ...
@@ -224,7 +216,6 @@ Cela garantit que chaque adresse email dans la colonne "email" sera unique.
 Pour insérer des données dans une table, vous pouvez utiliser la commande INSERT INTO suivie du nom de la table et des valeurs à insérer. Par exemple :
 
 '''sql
-
 INSERT INTO my_table (column1, column2, ...)
 VALUES (value1, value2, ...);
 '''
@@ -235,7 +226,6 @@ Vous devez spécifier les noms des colonnes et les valeurs correspondantes dans 
 Pour récupérer les données insérées, vous pouvez utiliser la commande SELECT avec la clause FROM pour spécifier la table à interroger. Par exemple :
 
 '''sql
-
 SELECT * FROM my_table;
 '''
 
@@ -245,7 +235,6 @@ Cela récupérera toutes les lignes et colonnes de la table "my_table". Vous pou
 Pour sélectionner un certain nombre de résultats, vous pouvez utiliser la clause LIMIT dans votre requête SELECT. Par exemple :
 
 '''sql
-
 SELECT * FROM my_table LIMIT 10;
 '''
 
@@ -255,7 +244,6 @@ Cela retournera les 10 premières lignes de la table "my_table". Vous pouvez mod
 Pour trier les résultats, vous pouvez utiliser la clause ORDER BY suivie du nom de la colonne par laquelle vous souhaitez trier. Par exemple :
 
 '''sql
-
 SELECT * FROM my_table ORDER BY column_name;
 '''
 
@@ -265,7 +253,6 @@ Cela triera les résultats de la table "my_table" en fonction des valeurs de la 
 Pour filtrer les données, vous pouvez utiliser la clause WHERE dans votre requête SELECT. Par exemple :
 
 '''sql
-
 SELECT * FROM my_table WHERE column_name = value;
 '''
 
@@ -275,7 +262,6 @@ Cela retournera uniquement les lignes où la valeur de la colonne "column_name" 
 Pour filtrer une colonne avec une valeur commençant par un certain caractère, vous pouvez utiliser l'opérateur "LIKE" avec le caractère joker "%" dans votre clause WHERE. Par exemple :
 
 '''sql
-
 SELECT * FROM my_table WHERE column_name LIKE 'prefix%';
 '''
 
@@ -287,7 +273,6 @@ Cela retournera les lignes où la valeur de la colonne "column_name" commence pa
 Les INDEX servent à accélérer les opérations de recherche dans une table. Ils permettent de créer des structures de données optimisées pour un accès plus rapide aux enregistrements. Pour créer un INDEX, vous pouvez utiliser la commande CREATE INDEX suivie du nom de l'index et du nom de la table ainsi que des colonnes sur lesquelles vous souhaitez créer l'index. Par exemple :
 
 '''sql
-
 CREATE INDEX index_name ON my_table (column1, column2, ...);
 '''
 
@@ -300,7 +285,6 @@ Pour créer une relation entre deux tables, vous pouvez utiliser les clés prima
 Pour sélectionner les données de plusieurs tables, vous pouvez utiliser la clause JOIN dans votre requête SELECT. La clause JOIN permet de combiner les lignes de deux ou plusieurs tables en fonction de leurs relations. Par exemple :
 
 '''sql
-
 SELECT * FROM table1 JOIN table2 ON table1.column_name = table2.column_name;
 '''
 
@@ -310,7 +294,6 @@ Cela sélectionnera les données des tables "table1" et "table2" en combinant le
 Pour ne sélectionner que certaines colonnes et les renommer dans la liste de résultats, vous pouvez spécifier les noms des colonnes séparés par des virgules dans votre requête SELECT. Vous pouvez également utiliser l'opérateur "AS" pour renommer les colonnes. Par exemple :
 
 '''sql
-
 SELECT column1 AS new_name1, column2 AS new_name2 FROM my_table;
 '''
 
@@ -320,7 +303,6 @@ Cela sélectionnera uniquement les colonnes "column1" et "column2" de la table "
 Pour supprimer une table, vous pouvez utiliser la commande DROP TABLE suivie du nom de la table. Par exemple :
 
 '''sql
-
 DROP TABLE my_table;
 '''
 
@@ -329,7 +311,6 @@ Cela supprimera complètement la table "my_table" de la base de données.
 Pour supprimer une base de données, vous pouvez utiliser la commande DROP DATABASE suivie du nom de la base de données. Par exemple :
 
 '''sql
-
 DROP DATABASE my_database;
 '''
 
