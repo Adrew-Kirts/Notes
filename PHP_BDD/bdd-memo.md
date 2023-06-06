@@ -384,6 +384,9 @@ DROP DATABASE my_database;
 Cela supprimera complètement la base de données "my_database" et toutes les tables qui y sont associées.
 
 
+## 2.2
+
+
 **- Qu’est-ce SQLite et ses avantages.**
 
 SQLite est une base de données relationnelle de type SQL (Structured Query Language) qui est souvent utilisée pour stocker et récupérer des données de manière efficace. Elle est souvent utilisée dans les applications mobiles, les applications web et les applications de bureau.
@@ -395,4 +398,8 @@ Les avantage de SQLite:
 - Sécurité
 - Performance
 - Portabilité
+
+## 2.3
+
+
 
