@@ -1,5 +1,4 @@
 -- SQLite
---PRAGMA foreign_keys = ON;
 
 DROP TABLE IF EXISTS tweets;
 DROP TABLE IF EXISTS hashtags;
