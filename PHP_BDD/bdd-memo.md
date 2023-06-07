@@ -161,13 +161,11 @@ Dans cet exemple, "id" est une colonne de type INTEGER, "nom" est une colonne de
 **- Listez les types de données que vous utiliserez le plus souvent.**
 
 Les types de données couramment utilisés sont :
-
+    NULL (pour la valeur NULL)
     INTEGER (pour les nombres entiers)
-    VARCHAR (pour les chaînes de caractères de longueur variable)
-    DATE (pour les dates)
-    DECIMAL (pour les nombres décimaux)
-    BOOLEAN (pour les valeurs booléennes, vrai ou faux)
+    REAL (pour les nombres décimaux)
     TEXT (pour les textes de longueur variable)
+    BLOB (pour un blob de data pure)
 
 **- Listez des contraintes utiles pour vos colonnes :**
 
@@ -497,3 +495,20 @@ INSERT INTO tweets_users (user_id, tweet_id) VALUES
   ```
 
 </details>
+
+
+## 2.4 - Création de la base de données des stations essences
+
+<details>
+  <summary>Code pour BDD Twitter</summary>
+
+  ### Twitter Database Code
+  ```sql
+  
+  --CODE HERE
+  
+  ```
+  
+  </details>
+  
+
