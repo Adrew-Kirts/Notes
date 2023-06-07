@@ -54,7 +54,7 @@ CREATE TABLE tweets_users (
 CREATE TABLE hashtags_tweets (
     hashtag_name INTEGER NOT NULL,
     tweet_id INTEGER NOT NULL,
-    FOREIGN KEY (hashtag_name) REFERENCPRAGMA foreign_keys = ON;ES hashtags(id),
+    FOREIGN KEY (hashtag_name) REFERENCES hashtags(id),
     FOREIGN KEY (tweet_id) REFERENCES tweets(id),
     PRIMARY KEY (hashtag_name, tweet_id),
     UNIQUE (hashtag_name, tweet_id)
@@ -67,7 +67,7 @@ INSERT INTO users (username, email, address, postal_code, city, country) VALUES
 
 
 INSERT INTO tweets (content, user_id) VALUES
-    ('I just learned how to make a pie frSELECT * FROM tweets;k out regularly to stay healthy and fit!', 3),
+    ('I just learned how to make a pie out regularly to stay healthy and fit!', 3),
     ('I am a music lover and I enjoy listening to music all day long!', 1),
     ('I am a book lover and I love reading books all the time!', 2),
     ('I am a travel enthusiast and I love exploring new places and cultures!', 3),
