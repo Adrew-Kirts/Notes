@@ -749,5 +749,44 @@ faunadb
 
 ## 2.6 TP Requêtes SQL
 
+<details>
+  <summary>Requetes carburants</summary>
 
+### requetes-carburants.sql
+
+```sql
+
+/*
+ 1. Récupérez les stations qui possèdent le service "Vente de gaz domestique"
+a. Affichez uniquement le code postal de ces stations
+b. Retirez les doublons -> "DISTINCT"
+ */
+
+SELECT DISTINCT code_postal
+FROM point_de_vente
+JOIN service_point_de_vente spdv ON spdv.point_de_vente_id = point_de_vente.id
+JOIN service sv ON sv.id = spdv.service_id
+WHERE sv.nom = 'Vente de gaz domestique';
+
+-- OU
+
+SELECT DISTINCT code_postal
+FROM point_de_vente pdv, service_point_de_vente spdv, service
+WHERE spdv.point_de_vente_id = pdv.id
+AND service.id = spdv.service_id
+AND service.nom = 'Vente de gaz domestique';
+
+/*
+ 2. Sélectionner le nombre de stations se trouvant à Annecy
+a. Affichez les stations qui sont ouvertes 24h/24
+ */
+
+SELECT adresse
+FROM point_de_vente pdv
+WHERE pdv.automate_24_24 = true
+AND pdv.ville = 'ANNECY';
+
+```
+
+</details>
 
