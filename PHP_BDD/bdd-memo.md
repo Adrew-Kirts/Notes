@@ -709,43 +709,42 @@ INSERT INTO horaires (point_de_vente_id, jour, ferme, horaire_ouverture, horaire
 
 ## 2.5 - Pour aller plus loin: les différents SGBD
 
-Types de bases de données: 
+Types de bases de données:
 
-1. Key-value 
-redis, mcache
+1. Key-value
+   redis, mcache
 
->Fast and efficient data retrieval. Good for small to medium-sized datasets.
+> Fast and efficient data retrieval. Good for small to medium-sized datasets.
 
 2. Wide column
-cassandra, hbase
+   cassandra, hbase
 
->Scalable and flexible for storing large amounts of structured data. Good for handling large datasets.
+> Scalable and flexible for storing large amounts of structured data. Good for handling large datasets.
 
 3. Document
-mongodb, firestorm, couchdb
+   mongodb, firestorm, couchdb
 
->Easy to use and integrate with other technologies. Good for storing and retrieving unstructured data.
+> Easy to use and integrate with other technologies. Good for storing and retrieving unstructured data.
 
 4. Relational
-MySQL, postgres
+   MySQL, postgres
 
->Provides a structured way to store and retrieve data. Good for handling complex queries and transactions.
+> Provides a structured way to store and retrieve data. Good for handling complex queries and transactions.
 
 5. Graph
-neo4j
+   neo4j
 
->Good for modeling complex relationships between data.
+> Good for modeling complex relationships between data.
 
 6. Search engine
-elastic, lucene, meilisearch
+   elastic, lucene, meilisearch
 
->Provides fast and efficient searching capabilities. Good for handling large amounts of text data.
+> Provides fast and efficient searching capabilities. Good for handling large amounts of text data.
 
 7. Multi-model
-faunadb
+   faunadb
 
->Provides a flexible and scalable approach to storing and retrieving data from multiple data models.
-
+> Provides a flexible and scalable approach to storing and retrieving data from multiple data models.
 
 ## 2.6 TP Requêtes SQL
 
@@ -781,12 +780,64 @@ AND service.nom = 'Vente de gaz domestique';
 a. Affichez les stations qui sont ouvertes 24h/24
  */
 
-SELECT adresse
+SELECT *
 FROM point_de_vente pdv
 WHERE pdv.automate_24_24 = true
 AND pdv.ville = 'ANNECY';
 
+/*
+ 3. Récupérez le nombre total de stations en France
+ a. Filtrez pour afficher le nombre de stations se trouvant dans le département 29, 23 et 69
+ */
+
+SELECT count(*)
+FROM point_de_vente pdv
+WHERE pdv.code_postal LIKE '29%'
+OR pdv.code_postal LIKE '23%'
+OR pdv.code_postal LIKE '69%';
+
+/*
+4. Calculez la moyenne des prix du Gazole en France :
+a. En 2007
+b. En 2014
+c. En 2023
+    */
+
+SELECT AVG(valeur)
+FROM prix
+JOIN carburant c on prix.carburant_id = c.id
+WHERE c.nom = 'Gazole'
+AND prix.date::text LIKE '2007%';
+
+SELECT AVG(valeur)
+FROM prix
+JOIN carburant c on prix.carburant_id = c.id
+WHERE c.nom = 'Gazole'
+AND prix.date::text LIKE '2014%';
+
+SELECT AVG(valeur)
+FROM prix
+JOIN carburant c on prix.carburant_id = c.id
+WHERE c.nom = 'Gazole'
+AND prix.date::text LIKE '2023%';
+
+
+/*
+ 5. Calculez la moyenne des prix du Gazole par département (on nommera bien la colonne
+“departement” dans les résultats). Trier les résultats par département croissant (01, 02...)
+a. Affichez le département où la moyenne du prix du Gazole est la moins cher
+ */
+
+SELECT AVG(valeur)
+FROM prix
+JOIN carburant c on prix.carburant_id = c.id
+JOIN point_de_vente pdv on prix.point_de_vente_id = pdv.id
+WHERE c.nom = 'Gazole'
+AND pdv.code_postal LIKE '01%';
+
+SELECT *
+FROM
+
 ```
 
 </details>
-
