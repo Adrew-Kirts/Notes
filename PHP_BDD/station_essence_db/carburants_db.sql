@@ -217,3 +217,4 @@ INSERT INTO horaires (point_de_vente_id, jour, ferme, horaire_ouverture, horaire
     (4, "Vendredi", "", "06.00", "23.00"),
     (4, "Samedi", "", "06.00", "23.00"),
     (4, "Dimanche", "", "06.00", "23.00");
+

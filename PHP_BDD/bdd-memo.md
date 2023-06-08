@@ -478,9 +478,9 @@ INSERT INTO tweets_users (user_id, tweet_id) VALUES
 ## 2.4 - Création de la base de données des stations essences
 
 <details>
-  <summary>Code pour BDD station d'essence/summary>
+  <summary>Code pour BDD station d'essence</summary>
 
-### Twitter Database Code
+### Service station Database Code
 
 ```sql
 
@@ -706,3 +706,48 @@ INSERT INTO horaires (point_de_vente_id, jour, ferme, horaire_ouverture, horaire
 ```
 
   </details>
+
+## 2.5 - Pour aller plus loin: les différents SGBD
+
+Types de bases de données: 
+
+1. Key-value 
+redis, mcache
+
+>Fast and efficient data retrieval. Good for small to medium-sized datasets.
+
+2. Wide column
+cassandra, hbase
+
+>Scalable and flexible for storing large amounts of structured data. Good for handling large datasets.
+
+3. Document
+mongodb, firestorm, couchdb
+
+>Easy to use and integrate with other technologies. Good for storing and retrieving unstructured data.
+
+4. Relational
+MySQL, postgres
+
+>Provides a structured way to store and retrieve data. Good for handling complex queries and transactions.
+
+5. Graph
+neo4j
+
+>Good for modeling complex relationships between data.
+
+6. Search engine
+elastic, lucene, meilisearch
+
+>Provides fast and efficient searching capabilities. Good for handling large amounts of text data.
+
+7. Multi-model
+faunadb
+
+>Provides a flexible and scalable approach to storing and retrieving data from multiple data models.
+
+
+## 2.6 TP Requêtes SQL
+
+
+
