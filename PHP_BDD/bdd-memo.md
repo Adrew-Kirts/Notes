@@ -828,15 +828,54 @@ AND prix.date::text LIKE '2023%';
 a. Affichez le département où la moyenne du prix du Gazole est la moins cher
  */
 
-SELECT AVG(valeur)
-FROM prix
-JOIN carburant c on prix.carburant_id = c.id
-JOIN point_de_vente pdv on prix.point_de_vente_id = pdv.id
+SELECT LEFT(code_postal, 2) AS departement, AVG(valeur) AS avg_price
+FROM point_de_vente pdv
+JOIN prix ON pdv.id = prix.point_de_vente_id
+JOIN carburant c ON prix.carburant_id = c.id
 WHERE c.nom = 'Gazole'
-AND pdv.code_postal LIKE '01%';
+GROUP BY departement
+ORDER BY departement;
 
-SELECT *
-FROM
+/*
+ 6. Sélectionnez le carburant qui était le plus souvent en rupture entre le mois de Janvier 2023 et
+Mars 2023
+a. Sélectionnez le carburant le plus souvent en rupture entre le mois de Janvier 2023 et
+Mars 2023 à ANNECY
+ */
+
+SELECT nom, count(nom) AS count
+FROM carburant c
+         JOIN rupture r on c.id = r.carburant_id
+         JOIN point_de_vente pdv on r.point_de_vente_id = pdv.id
+WHERE r.debut::text > '2023-01%' AND r.fin::text < '2023-04%'
+    AND pdv.ville = 'ANNECY'
+GROUP BY nom
+ORDER BY count DESC
+LIMIT 1;
+
+/*
+ b. Affichez le département où le plus de rupture (tout types de carburants confondus) a eu
+lieu entre Février 2023 et Mars 2023
+ */
+
+SELECT LEFT(code_postal, 2) AS departement, count(nom) AS count
+FROM carburant c
+         JOIN rupture r on c.id = r.carburant_id
+         JOIN point_de_vente pdv on r.point_de_vente_id = pdv.id
+WHERE r.debut::text > '2023-02%' AND r.fin::text < '2023-04%'
+GROUP BY departement
+ORDER BY count DESC
+LIMIT 1;
+
+/*
+ 7. Sélectionnez le point de vente et la date où le prix de l’E10 était le plus élevé
+ */
+
+SELECT adresse, ville, date
+FROM point_de_vente pdv
+    JOIN carburant c on c.id = pdv.id
+    JOIN prix p on pdv.id = p.point_de_vente_id
+
 
 ```
 
