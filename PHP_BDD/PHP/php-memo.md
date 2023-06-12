@@ -55,4 +55,121 @@ La variable $argc contient le nombre d'arguments passés à la ligne de commande
 Copy codephp mon_script.php arg1 arg2 arg3
 La variable $argc contiendra la valeur 4.
 
-## 3.4
+## 3.4 - Calculatrice
+
+<details>
+  <summary>Code pour calculatrice</summary>
+
+```html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<body>
+
+    <form action="calculator.php" method="get">
+        <input type="number" name="num1" placeholder="Number 1">
+        <br>
+        <input type="number" name="num2" placeholder="Number 2">
+        <br>
+        <select name="operator">
+            <option>Choose operator:</option>
+            <option>Add</option>
+            <option>Substract</option>
+            <option>Multiply</option>
+            <option>Divide</option>
+        </select>
+        <button type="submit" name= "submit" value="submit">Calculate</button>
+<p>
+    </form>
+
+    <?php
+
+if (isset($_GET['submit'])) {
+    $result1 = $_GET['num1'];
+    $result2 = $_GET['num2'];
+    $operator = $_GET['operator'];
+    switch ($operator) {
+        case "Choose operator:":
+            die("You need to select an operator!");
+        break;
+
+        case "Add":
+            echo "You calculated ",$result1, "+", $result2, "<br><br>";
+            echo "Answer: ", $result1 + $result2;
+        break;
+
+        case "Substract":
+            echo "You calculated ",$result1, "-", $result2, "<br><br>";
+            echo "Answer: ", $result1 - $result2;
+        break;
+
+        case "Multiply":
+            echo "You calculated ",$result1, "*", $result2, "<br><br>";
+            echo "Answer: ", $result1 * $result2;
+        break;
+
+        case "Divide":
+            echo "You calculated ",$result1, "/", $result2, "<br><br>";
+            echo "Answer: ", $result1 / $result2;
+        break;
+
+    }
+}
+
+?>
+</p>
+</body>
+</html>
+
+```
+
+</details>
+
+## 3.5
+
+<details>
+  <summary>Code pour Devine le nombre</summary>
+
+```php
+
+
+  <?php
+
+$number  = rand(1, 100);
+      $guesses = 0;
+      $didIWinYet = false;
+      $handle  = fopen('php://stdin', 'r');
+
+      echo "\nGuess a number between 1 and 100..\n";
+
+      while (!$didIWinYet)
+      {
+          $guesses++;
+          echo 'What is your guess? ';
+
+          $guess = fgets($handle);
+
+              if ($guess > $number)
+              {
+                  echo "Too high...\n";
+              }
+              elseif ($guess < $number)
+              {
+                  echo "Too low...\n";
+              }
+              elseif ($guess == $number)
+              {
+                  echo "\nYou guessed it in ", "$guesses", " times!\n\n";
+                  exit;
+              }
+          }
+  ?>
+
+```
+
+  </details>
