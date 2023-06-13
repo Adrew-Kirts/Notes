@@ -60,7 +60,7 @@ La variable $argc contiendra la valeur 4.
 <details>
   <summary>Code pour calculatrice</summary>
 
-```html
+```php
 
 <!DOCTYPE html>
 <html lang="en">
@@ -71,7 +71,7 @@ La variable $argc contiendra la valeur 4.
 </head>
 <body>
 
-    <form action="calculator.php" method="get">
+    <form action="" method="get">
         <input type="number" name="num1" placeholder="Number 1">
         <br>
         <input type="number" name="num2" placeholder="Number 2">
@@ -93,10 +93,9 @@ if (isset($_GET['submit'])) {
     $result1 = $_GET['num1'];
     $result2 = $_GET['num2'];
     $operator = $_GET['operator'];
+
+
     switch ($operator) {
-        case "Choose operator:":
-            die("You need to select an operator!");
-        break;
 
         case "Add":
             echo "You calculated ",$result1, "+", $result2, "<br><br>";
@@ -118,6 +117,9 @@ if (isset($_GET['submit'])) {
             echo "Answer: ", $result1 / $result2;
         break;
 
+        default:
+            die("You need to select an operator!");
+
     }
 }
 
@@ -130,10 +132,10 @@ if (isset($_GET['submit'])) {
 
 </details>
 
-## 3.5
+## 3.5 - Devine le nombre
 
 <details>
-  <summary>Code pour Devine le nombre</summary>
+  <summary>Code pour devine le nombre</summary>
 
 ```php
 
@@ -173,3 +175,70 @@ $number  = rand(1, 100);
 ```
 
   </details>
+
+## 3.5 - Devine le nombre (2)
+
+<details>
+  <summary>Code pour devine le nombre - partie 2</summary>
+
+```php
+
+
+    <?php
+
+playGame();
+
+function playGame(){
+        $guesses = 1;
+        $didIWinYet = false;
+        $handle  = fopen('php://stdin', 'r');
+        $maxRandom = (int)readline('Choose the max value for the number to find: ');
+        define('MIN_NUMBER', 1);
+        $number  = rand(MIN_NUMBER, $maxRandom);
+        
+        echo "\nGuess a number between ", MIN_NUMBER," and ", "$maxRandom", "..\n";
+        
+        while (!$didIWinYet)
+        {
+            echo 'What is your guess? ';
+        
+            $guess = fgets($handle);
+            $lastGuess = $guess;
+
+            if($guesses == 1 && $guess !== $number){
+                $old_gap = abs($number-$guess);
+                echo "Try again...\n";
+        
+            } else if($guess != $number){
+                $gap = abs($number-$guess);
+                if($gap < $old_gap){
+                    echo "getting closer...\n";
+                }else{
+                    echo "moving away...\n";
+                }
+                $old_gap = $gap;
+        
+            }else{
+                echo "\nYou guessed it in $guesses times!\n\n";
+                exit();
+            }
+                    $guesses++;
+            }
+        }
+    ?>
+
+```
+
+## 3.6 - Création d'un template
+
+<details>
+  <summary>Code pour template</summary>
+
+```php
+
+
+
+```
+
+
+
