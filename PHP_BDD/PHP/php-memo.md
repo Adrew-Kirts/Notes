@@ -232,13 +232,37 @@ function playGame(){
 ## 3.6 - Création d'un template
 
 <details>
-  <summary>Code pour template</summary>
+  <summary>Code pour index.php</summary>
 
 ```php
 
 
+ <?php 
+    require './view/header.php';
+
+    if(isset($_GET['url']) && $_GET['url']=='error'){
+        include './view/error.php';
+        
+    } elseif(isset($_GET['url']) && $_GET['url']=='user_profile'){
+        include './view/user_profile.php';
+
+    } elseif(isset($_GET['url']) && $_GET['url']=='product_profile'){
+        include './view/product_profile.php';
+        
+    } else {
+        include './view/home.php';
+    }
+    
+    require './view/footer.php'; 
+        
+        ?>
 
 ```
 
+## 3.7 - PDO
+
+Code source pour PDO: 
+
+https://github.com/Adrew-Kirts/PHP_Projects/blob/main/toxo-miaou/view/dbtest.php
 
 
