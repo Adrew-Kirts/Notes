@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
+    <title>PUMP IT UP</title>
+</head>
+<body>
+<header class="container-fluid row d-flex bg-primary text-light">
+    <h1>PUMP IT UP®</h1>
+    <a href="#">Graphiques</a>
+    <a href="#">Carte Interactive</a>
+
+</header>
+
+<?php
+
+  $yearQuery = "2023%"; 
+
+  if (isset($_GET['year'])) {
+      $selectedYear = $_GET['year'];
+      
+      switch ($selectedYear) {
+          case '2007':
+              $yearQuery = "2007%";
+              break;
+          case '2013':
+              $yearQuery = "2013%";
+              break;
+          default:
+              $yearQuery = "2023%"; 
+              break;
+      }
+  }
+
+  try {
+      $con = new PDO("pgsql:host=localhost;port=5432;dbname=fuel-dataviz;user=postgres;password=password");
+  } catch (PDOException $e) {
+      echo "Failed to connect to the database: " . $e->getMessage();
+      exit;
+  }
+
+  $query = $con->query(
+      "SELECT nom, AVG(valeur) AS prixmoyen
+      FROM prix
+      JOIN carburant c on prix.carburant_id = c.id
+      WHERE prix.date::text LIKE '$yearQuery'
+      GROUP BY c.nom;"
+  );
+
+  $result = $query->fetchAll(PDO::FETCH_ASSOC);
+
+  $essence = [];
+  $prix = [];
+
+  if ($result) {
+      foreach ($result as $data) {
+          $essence[] = $data['nom'];
+          $prix[] = $data['prixmoyen'];
+
+      }
+  } else {
+      echo "Failed to execute the query.";
+      exit;
+  }
+
+  ?>
+
+
+  <div style="width: 400px;">
+    <canvas id="myChart"></canvas>
+    <button id="btn-2007" onclick="updateYear('2007')">2007</button>
+    <button id="btn-2013" onclick="updateYear('2014')">2014</button>
+    <button id="btn-2023" onclick="updateYear('2023')">2023</button>
+  </div>
+
+
+  <script>
+      
+  const labels = <?php echo json_encode($essence); ?>;
+
+  const dataPrix = <?php echo json_encode($prix); ?>;
+
+
+  const data = {
+    labels: labels,
+    datasets: [{
+      label: 'Prix moyen',
+      data: dataPrix,
+      
+      backgroundColor: [
+        '#165BAA',
+        '#165BAA',
+        '#165BAA',
+        '#165BAA',
+        '#165BAA',
+        '#165BAA'
+
+      ],
+      borderColor: [
+        'rgb(255, 99, 132)',
+        'rgb(255, 159, 64)',
+        'rgb(255, 205, 86)',
+        'rgb(75, 192, 192)',
+        'rgb(54, 162, 235)',
+        'rgb(153, 102, 255)',
+        'rgb(201, 203, 207)'
+      ],
+      borderWidth: 1
+    }]
+  };
+
+  const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    },
+  };
+
+  const updateYear = (year) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('year', year);
+    window.location.search = urlParams.toString();
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, config);
+  });
+
+  </script>
+
+
+
+
+
+
+
+
+
+
+<?php
+
+
+$queryGazole = $con->query(
+    "SELECT c.nom, AVG(valeur) AS prixmoyentwo, date_part('Month', p.date) AS mois 
+    FROM prix AS p
+    JOIN carburant AS c ON p.carburant_id = c.id
+    WHERE p.date::text LIKE '2023%'
+    AND c.nom = 'Gazole'
+    GROUP BY c.nom, mois;"
+);
+
+//var_dump($queryGazole);
+$resultTwo = $queryGazole->fetchAll(PDO::FETCH_ASSOC);
+
+$mois = [];
+$prixTwo = [];
+
+if ($resultTwo) {
+    foreach ($resultTwo as $dataTwo) {
+        $mois[] = $dataTwo['mois'];
+        $prixTwo[] = $dataTwo['prixmoyentwo'];
+
+    }
+} else {
+    echo "Failed to execute the query.";
+    exit;
+}
+
+$queryE10 = $con->query(
+  "SELECT c.nom, AVG(valeur) AS prixmoyenedix, date_part('Month', p.date) AS mois 
+  FROM prix AS p
+  JOIN carburant AS c ON p.carburant_id = c.id
+  WHERE p.date::text LIKE '2023%'
+  AND c.nom = 'E10'
+  GROUP BY c.nom, mois;"
+);
+//var_dump($queryE10);
+
+$resultEDix = $queryE10->fetchAll(PDO::FETCH_ASSOC);
+
+$moisEDix = [];
+$prixEDix = [];
+
+
+if ($resultEDix) {
+    foreach ($resultEDix as $dataEDix) {
+      $moisEDix[] = $dataEDix['mois'];
+        $prixEDix[] = $dataEDix['prixmoyenedix'];
+
+    }
+} else {
+    echo "Failed to execute the query.";
+    exit;
+}
+
+?>
+
+<div style="width: 400px;">
+
+    <canvas id="myChart"></canvas>
+
+  <canvas id="myChartThree"></canvas>
+
+</div>
+
+<?php
+$queryPdvByDpt = $con->query(
+        "SELECT LEFT(code_postal, 2) AS cp, COUNT(*) AS nbr_pdv FROM point_de_vente
+WHERE LEFT(code_postal, 2) IN ('01', '03', '07', '15', '26', '38', '42', '43', '63', '69', '73', '74')
+GROUP BY cp
+ORDER BY cp;"
+);
+$resultPdvByDpt = $queryPdvByDpt->fetchAll(PDO::FETCH_ASSOC);
+$departement = [];
+$nbrPdv = [];
+echo "<pre>";
+//var_dump($resultPdvByDpt);
+
+echo "</pre>";
+
+if ($resultPdvByDpt) {
+    foreach ($resultPdvByDpt as $data) {
+        $departement[] = $data['cp'];
+        $nbrPdv[] = $data['nbr_pdv'];
+    }
+} else {
+    echo "Failed to execute the query.";
+    exit;
+}
+//echo "<pre>";
+//var_dump($departement);
+//var_dump($nbrPdv);
+//echo "</pre>";
+?>
+<div>
+    <canvas id="pdvByDpt"></canvas>
+</div>
+
+<script>
+    
+    const labelsTwo = <?php echo json_encode($mois); ?>;
+    const dataGazole = <?php echo json_encode($prixTwo); ?>;
+    const dataEDix = <?php echo json_encode($prixEDix); ?>;
+
+    // console.log('hello');
+    const labels = <?php echo json_encode($essence); ?>;
+    // console.log(labels);
+    const dataPrix = <?php echo json_encode($prix); ?>;
+    //console.log(dataPrix);
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Prix moyen',
+            data: dataPrix,
+
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    };
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const ctx = document.getElementById('myChart').getContext('2d');
+        new Chart(ctx, config);
+    });
+
+    
+    const labelsTwo = <?php echo json_encode($mois); ?>;
+    const dataGazole = <?php echo json_encode($prixTwo); ?>;
+    const dataEDix = <?php echo json_encode($prixEDix); ?>;
+
+const dataThree = {
+  labels: ['janvier', 'février', 'mars', 'avril', 'mai'],
+  datasets: [
+    {
+      label: 'Gazole',
+      data: dataGazole,
+      borderColor: 'rgb(75, 192, 192)',
+      backgroundColor: 'rgb(75, 192, 192)',
+      yAxisID: 'y',
+    },
+    {
+      label: 'E10',
+      data: dataEDix,
+      borderColor: 'rgb(200, 0, 0)',
+      backgroundColor: 'rgb(200, 0, 0)',
+      yAxisID: 'y1',
+    }
+  ]
+};
+
+const configThree = {
+  type: 'line',
+  data: dataThree,
+  options: {
+    responsive: true,
+    interaction: {
+      mode: 'index',
+      intersect: false,
+    },
+    stacked: false,
+    plugins: {
+      title: {
+        display: true,
+        text: 'Chart.js Line Chart - Multi Axis'
+      }
+    },
+    scales: {
+      y: {
+        type: 'linear',
+        display: true,
+        position: 'left',
+      },
+      y1: {
+        type: 'linear',
+        display: true,
+        position: 'right',
+
+        // grid line settings
+        grid: {
+          drawOnChartArea: false, // only want the grid lines for one axis to show up
+        },
+      },
+    }
+  },
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  const ctxThree = document.getElementById('myChartThree').getContext('2d');
+  new Chart(ctxThree, configThree);
+});
+
+    //console.log('hello');
+
+    const labelsPdv = <?php echo json_encode($departement); ?>;
+    console.log('code postal', labelsPdv);
+    const dataPdvNbr = <?php echo json_encode($nbrPdv); ?>;
+    console.log('nombre points de vente', dataPdvNbr);
+
+    const dataPdv = {
+        labels: [
+            'Ain',
+            'Allier',
+            'Ardèche',
+            'Cantal',
+            'Drôme',
+            'isère',
+            'Loire',
+            'Haute-Loire',
+            'Puy-de-Dôme',
+            'Rhône',
+            'Savoie',
+            'Haute-Savoie'
+        ],
+        datasets: [{
+            label: 'Nombre de points de vente par département en ARA',
+            data: dataPdvNbr,
+
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(255, 159, 64, 0.2)',
+                'rgba(255, 205, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(201, 203, 207, 0.2)'
+            ],
+            borderColor: [
+                'rgb(255, 99, 132)',
+                'rgb(255, 159, 64)',
+                'rgb(255, 205, 86)',
+                'rgb(75, 192, 192)',
+                'rgb(54, 162, 235)',
+                'rgb(153, 102, 255)',
+                'rgb(201, 203, 207)'
+            ],
+            borderWidth: 1
+        }]
+    };
+    const configPdv = {
+        type: 'bar',
+        data: dataPdv,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        },
+    };
+    document.addEventListener('DOMContentLoaded', () => {
+        const ctx = document.getElementById('pdvByDpt').getContext('2d');
+        new Chart(ctx, configPdv);
+    });
+</script>
+
+
+</body>
+</html>
+
