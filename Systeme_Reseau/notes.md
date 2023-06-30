@@ -284,5 +284,128 @@ La couche application est le groupe d'applications nécessitant une communicatio
 
 Les couches du OSI en lien avec mon réseau:
 
-![lien_OSI_réseau](https://image.noelshack.com/fichiers/2023/26/4/1688042659-screenshot-from-2023-06-29-14-43-23.png)
+![lien_OSI_réseau](https://image.noelshack.com/fichiers/2023/26/5/1688111995-screenshot-from-2023-06-30-09-59-24.png)
+
+
+
+# Service DNS
+
+## Compétences
+
+● Comprendre comment fonctionne le service DNS
+
+● Implémentation d’un serveur DNS dans une architecture réseau local
+
+● Configuration d’un nom de domaine pour le faire pointer vers un serveur web
+
+## 1 - Un service DNS, c'est quoi ?
+
+- Quel est l’ordre des actions (Requête/Réponse DNS, ping) effectuées pour
+réaliser lorsque, depuis le PC10, j’utilise la commande ping PC11 ? 
+
+Attention : le PC10 ne connaît pas l’adresse IP de PC11.
+
+PC10 fait une requete DNS pour avoir l'adresse IP de PC11, une fois reçu il envoie son paquet qui passe par le switch pour aller au PC11, puis fait le chemin inverse.
+
+
+## 2 — Déployez et configurez un serveur DNS sur Cisco Packet Tracer
+
+![dns serveur](https://image.noelshack.com/fichiers/2023/26/5/1688116566-screenshot-from-2023-06-30-11-16-02.png)
+
+
+## 3 - Configurer un record DNS avec Cloudflare
+
+➔ Faites une recherche sur les principes de base des noms de domaine afin de
+comprendre ce qu’est un sous-domaine
+
+➔ Une explication des différents types d’enregistrement DNS
+
+
+**Enregistrement A** - L'enregistrement qui contient l'adresse IP d'un domaine. En savoir davantage sur l'enregistrement A.
+
+**Enregistrement AAAA** - L'enregistrement qui contient l'adresse IPv6 d'un domaine (par opposition aux enregistrements A, qui répertorient l'adresse IPv4). En savoir plus sur l'enregistrement AAAA.
+
+**Enregistrement CNAME** - Transfère un domaine ou un sous-domaine à un autre domaine, ne fournit PAS d'adresse IP. En savoir davantage sur l'enregistrement CNAME.
+
+**Enregistrement MX** - Dirige le courrier vers un serveur de messagerie. En savoir davantage sur l'enregistrement MX.
+
+**Enregistrement TXT** - Permet à un administrateur de stocker des notes de texte dans l'enregistrement. Ces enregistrements sont souvent utilisés pour la sécurité des e-mails. En savoir plus sur l'enregistrement TXT.
+
+**Enregistrement NS** - Stocke le serveur de noms pour une entrée DNS. En savoir plus sur l'enregistrement NS.
+
+**Enregistrement SOA **- Stocke les informations administratives d'un domaine. En savoir davantage sur l'enregistrement SOA.
+
+**Enregistrement SRV** - Spécifie un port pour des services spécifiques. En savoir davantage sur l'enregistrement SRV.
+
+**Enregistrement PTR** - Fournit un nom de domaine dans les recherches inversées. En savoir davantage sur l'enregistrement PTR.
+
+
+- Un screenshot de votre enregistrement DNS dans Cloudflare
+
+![dns](https://image.noelshack.com/fichiers/2023/26/5/1688117751-screenshot-from-2023-06-30-11-35-38.png)
+
+- Un screenshot de votre site web qui affichera votre nom
+
+![nom](https://image.noelshack.com/fichiers/2023/26/5/1688117751-screenshot-from-2023-06-30-11-35-38.png)
+
+
+# Protocole HTTP
+
+- Qu’est ce qu’une API (et plus spécifiquement une API REST)?
+
+Une API est un ensemble de définitions et de protocoles qui facilite la création et l'intégration de logiciels d'applications. Elle est parfois considérée comme un contrat entre un fournisseur d'informations et un utilisateur d'informations, qui permet de définir le contenu demandé au consommateur (l'appel) et le contenu demandé au producteur (la réponse). 
+
+Une API REST (Representational State Transfer Application Program Interface) est une interface de programmation d'application (API ou API web) qui respecte les contraintes du style d'architecture REST et permet d'interagir avec les services web RESTful.
+
+- Qu’est ce que le protocole HTTP ?
+
+L'Hypertext Transfer Protocol (HTTP, littéralement « protocole de transfert hypertexte ») est utilisé pour charger des pages sur Internet à l'aide d'hyperliens.
+
+- Quelles sont les méthodes disponibles avec le protocole HTTP ?
+
+
+**GET**
+
+La méthode GET demande une représentation de la ressource spécifiée. Les requêtes GET doivent uniquement être utilisées afin de récupérer des données.
+
+**HEAD**
+
+La méthode HEAD demande une réponse identique à une requête GET pour laquelle on aura omis le corps de la réponse (on a uniquement l'en-tête).
+
+**POST**
+
+La méthode POST est utilisée pour envoyer une entité vers la ressource indiquée. Cela entraîne généralement un changement d'état ou des effets de bord sur le serveur.
+
+**PUT**
+
+La méthode PUT remplace toutes les représentations actuelles de la ressource visée par le contenu de la requête.
+
+**DELETE**
+
+La méthode DELETE supprime la ressource indiquée.
+
+**CONNECT**
+
+La méthode CONNECT établit un tunnel vers le serveur identifié par la ressource cible.
+
+**OPTIONS**
+
+La méthode OPTIONS est utilisée pour décrire les options de communications avec la ressource visée.
+
+**TRACE**
+
+La méthode TRACE réalise un message de test aller/retour en suivant le chemin de la ressource visée.
+
+**PATCH**
+
+La méthode PATCH est utilisée pour appliquer des modifications partielles à une ressource.
+
+
+- Quelle est la différence entre le protocole HTTP et le protocole HTTPS ?
+
+Le protocole HTTPS est sécurisé par un protocole de transport, à savoir SSL/TLS
+
+- Qu’est ce qu’un Bearer token ?
+
+Un "Bearer Token" est un JSON Web Token dont le rôle est d'indiquer que l'utilisateur qui accède aux ressources est bien authentifié. Il doit donc commencer par récupérer le token puis l'envoyer au serveur, à chaque requête, pour que celui-ci le valide (en fonction de différentes règles: validation de la clé, validation de l'audience, etc.)
 
