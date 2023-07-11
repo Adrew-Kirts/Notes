@@ -62,12 +62,46 @@ Une classe est un ensemble :
 
     et de comportements, nommés méthodes.
 
+### Constructeur
+
+Constructors are like normal methods within the class, but are used to initialize the object of the class. 
+
+In Java, because of constructor overloading, a class can have multiple constructors as long as they have different parameter values. The signature is useful in that it helps the compiler differentiate between the different methods. For example:
+
+```
+public class Car {
+  String color;
+  int mpg;
+  boolean isElectric;
+ 
+  // constructor 1
+  public Car(String carColor, int milesPerGallon) {
+    color = carColor;
+    mpg = milesPerGallon;
+  }
+  // constructor 2
+  public Car(boolean electricCar, int milesPerGallon) {
+    isElectric = electricCar;
+    mpg = milesPerGallon;
+  }
+}
+```
+
+The compiler will know which constructor to use because of the values we pass into it. For example, Car myCar = new Car(true, 40) will be created by the second constructor because the arguments match the type and order of the second constructor’s signature.
+
+---
 
 ### Fonction 
 
 Une fonction peut être considérée comme un bloc de code avec un nom, qui exécute un service. Quand il s'agit d'une fonction   main  , le service effectué est en fait le programme lui-même.
 
 Lorsqu'une fonction est située à l'intérieur d'une classe, elle s'appelle une méthode. Puisque tout le code est situé à l'intérieur de classes, vous pouvez utiliser les deux termes (fonctions et méthodes) de manière interchangeable.
+
+---
+
+### Method
+
+Methods are reusable pieces of code in classes. The difference between a method and a function is that methods are always related to a class or an object.
 
 ### Variables
 
@@ -86,7 +120,7 @@ final String MYFAVOURITEFOOD = "Icecream";
 
 ---
 
-Pour une précision jusqu'à 2 décimales après la virgule, vous pouvez utiliser float  .  Au-delà, ce sera  double.
+Pour une précision jusqu'à 2 décimales après la virgule, vous pouvez utiliser float.  Au-delà, ce sera  double.
 
 ```
 float length = 1876.79;
@@ -102,6 +136,37 @@ Autres data types:
 * boolean, which stores true and false.
 * char, which stores single characters using single quotes.
 * String, which stores multiple characters using double quotes.
+
+---
+
+### Instance variable
+
+We add data to an object by introducing instance variables, or instance fields.
+
+We want Car instances of different colors, so we declare a String color instance field. Often times, instance variables are described as a “has-a” relationship with the object. For example, a Car “has-a” color
+
+
+```
+
+public class Car {
+  /*
+  declare fields inside the class
+  by specifying the type and name
+  */
+  String color;
+ 
+  public Car() {
+    /* 
+    instance fields available in
+    scope of constructor method
+    */
+  }
+ 
+  public static void main(String[] args) {
+    // body of main method
+  }
+}
+```
 
 ---
 
