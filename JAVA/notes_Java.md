@@ -1,4 +1,4 @@
-# Notes JAVA
+# Notes sur JAVA
 
 ## Objectif Global
 
@@ -62,6 +62,8 @@ Une classe est un ensemble :
 
     et de comportements, nommés méthodes.
 
+---
+
 ### Constructeur
 
 Constructors are like normal methods within the class, but are used to initialize the object of the class. 
@@ -102,6 +104,8 @@ Lorsqu'une fonction est située à l'intérieur d'une classe, elle s'appelle une
 ### Method
 
 Methods are reusable pieces of code in classes. The difference between a method and a function is that methods are always related to a class or an object.
+
+---
 
 ### Variables
 
@@ -174,6 +178,7 @@ public class Car {
 
 ![](https://user.oc-static.com/upload/2021/12/02/16384488903952_p1c5-2.png)
 
+---
 
 ### Getter (accessor)
 
@@ -191,6 +196,8 @@ public class Dog{
 }
 ```
 
+---
+
 # Setter (mutator)
 
 Similarly, private instance variables often have mutator methods (sometimes known as “setters”). These methods allow other classes to reset the value stored in private instance variables.
@@ -206,6 +213,10 @@ ublic class Dog{
   }
  
 ```
+
+---
+
+
 
 ### Divers: 
 
