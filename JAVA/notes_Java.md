@@ -175,7 +175,37 @@ public class Car {
 ![](https://user.oc-static.com/upload/2021/12/02/16384488903952_p1c5-2.png)
 
 
+### Getter (accessor)
 
+To give other classes access to a private instance variable, we would write an accessor method (sometimes also known as a “getter” method).
+
+```
+public class Dog{
+  private String name;
+ 
+  //Other methods and constructors
+ 
+  public String getName() {
+    return name;
+  }
+}
+```
+
+# Setter (mutator)
+
+Similarly, private instance variables often have mutator methods (sometimes known as “setters”). These methods allow other classes to reset the value stored in private instance variables.
+
+```
+ublic class Dog{
+  private String name;
+ 
+  //Other methods and constructors
+ 
+  public void setName(String newName) {
+    name = newName;
+  }
+ 
+```
 
 ### Divers: 
 
