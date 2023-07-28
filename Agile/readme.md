@@ -66,3 +66,7 @@ La mesure de l'utilité ou de la valeur qu'un utilisateur ou un client obtient d
 Une mesure de la quantité de travail qu'une équipe Agile peut accomplir pendant un sprint. Elle est généralement exprimée en points de story ou en unités d'estimation similaires. La vélocité est utilisée pour planifier les futurs sprints en fonction de la capacité de l'équipe.
 
 
+## Fonctionnement Scrum
+
+![Fonctionnement Scrum](https://www.viragegroup.com/wp-content/uploads/2017/10/sketchnote-scrum-methode-agile.jpg)
+
