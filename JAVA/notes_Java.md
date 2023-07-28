@@ -62,6 +62,8 @@ Une classe est un ensemble :
 
     et de comportements, nommés méthodes.
 
+Java programs utilize multiple classes, each of which requires its own file. Only one file needs a main() method — this is the file we will run.
+
 ---
 
 ### Constructeur
@@ -104,6 +106,21 @@ Lorsqu'une fonction est située à l'intérieur d'une classe, elle s'appelle une
 ### Method
 
 Methods are reusable pieces of code in classes. The difference between a method and a function is that methods are always related to a class or an object.
+
+#### Static methods
+
+Static methods are methods that belong to an entire class. We can call and use these methods without creating an object of the class. Static methods are called using the class name and the . operator:
+
+```
+double randomNumber = Math.random();
+// Stores a random decimal between 0.0 and 1.0 in randomNumber
+```
+
+``` 
+double number = Double.valueOf("2.5");
+// Transforms the String "2.5" into a double
+```
+
 
 ---
 
@@ -216,7 +233,102 @@ ublic class Dog{
 
 ---
 
+# Inheritance
 
+A Java class can inherit traits from another class. Because a Triangle is a Shape, we can define Triangle so that it inherits fields and methods directly from Shape.
+
+There are several terms often encountered:
+- Parent class, superclass, and base class refer to the class that another class inherits from (like Shape).
+- Child class, subclass, and derived class refer to a class that inherits from another class (like Triangle).
+
+So how do we define a child class so that it inherits from a parent class? We use the keyword extends like this:
+```
+class Shape {
+ 
+  // Shape class members
+ 
+}
+ 
+class Triangle extends Shape {
+ 
+  // additional Triangle class members
+ 
+}
+```
+Now *Triangle* has inherited traits from *Shape*, meaning it copied over class members from *Shape*. When we use inheritance to extend a subclass from a superclass, we create an “is-a” relationship from the subclass to the superclass. For example, an object of *Triangle* is a member of the *Shape* class; however, an object of *Shape* is not necessarily an object of *Triangle*.
+
+
+
+| **Modifier** | **Class** | **Package** | **Child class** | **Global** |
+|--------------|-----------|-------------|-----------------|------------|
+| public       |   **V**   |    **V**    |      **V**      |    **V**   |
+| protected    |   **V**   |    **V**    |      **V**      |      X     |
+| no modifier  |   **V**   |    **V**    |        X        |      X     |
+| private      |   **V**   |      X      |        X        |      X     |
+
+
+
+### Polymorphism 
+
+Polymorphism, which derives from Greek meaning “many forms”, allows a child class to share the information and behavior of its parent class while also incorporating its own functionality.
+
+The main advantages of polymorphic programming:
+
+* Simplifying syntax
+* Reducing cognitive overload for developers
+
+These benefits are particularly helpful when we want to develop our own Java packages for other developers to import and use.
+
+
+#### super()
+
+The ```super``` keyword can be used to call the constructor of a superclass. That’s not the only use of ```super```; we can also use this keyword to call the methods of a parent class by prepending ```super``` followed by the dot operator ```(.)``` to the method call.
+
+Example: 
+```
+  public void checkBalances() {
+    // calls method from CheckingAccount
+    printBalance();
+    // calls method from BankAccount
+    super.printBalance();
+  }
+```
+#### Method overriding
+
+We can do the following:
+```
+class BankAccount {
+  protected double balance;
+ 
+  public BankAccount(double balanceIn){
+    balance = balanceIn;
+  }
+ 
+  public void printBalance() {
+    System.out.println("Your account balance is $" + balance);
+  }
+}
+ 
+class CheckingAccount extends BankAccount {
+ 
+  public CheckingAccount(double balance) {
+    super(balance);
+  }
+ 
+ //Here we override the original print statement:
+  @Override
+  public void printBalance() {
+    System.out.println("Your checking account balance is $" + balance);
+  }
+}
+```
+Notice that in order to properly override ```printBalance()```, in CheckingAccount the method has the following in common with the corresponding method in BankAccount:
+
+* Method name
+* Return type
+* Number and type of parameters
+
+You may have also noticed the ```@Override``` keyword above ```printBalance()``` in CheckingAccount. This annotation informs the compiler that we want to override a method in the parent class. If the method doesn’t exist in the parent class, we’ll get a helpful error when we compile the program.
 
 ### Divers: 
 
