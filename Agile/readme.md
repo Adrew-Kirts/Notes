@@ -70,3 +70,18 @@ Une mesure de la quantité de travail qu'une équipe Agile peut accomplir pendan
 
 ![Fonctionnement Scrum](https://www.viragegroup.com/wp-content/uploads/2017/10/sketchnote-scrum-methode-agile.jpg)
 
+
+## Projet - Ride the Myth
+
+### Product Vision Board
+
+![](https://i.ibb.co/g73pVKL/Product-Vision-Board.jpg)
+
+### Vision Produit
+
+![](https://i.ibb.co/DRzZ6B5/Vision-produit.jpg)
+
+### Story Board
+
+![](https://i.ibb.co/SKsYpry/IMG-6031.jpg)
+
