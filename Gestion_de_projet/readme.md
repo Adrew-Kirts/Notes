@@ -1,6 +1,26 @@
 # Module - Gestion de projet
 
 
+## Les 5 phases d'un projet
+
+#### Avant Projet
+C'est la phase de préparation du projet. Elle comprend la définition des objectifs, l'identification des parties prenantes, l'évaluation des risques et la planification des ressources.
+
+#### Lancement
+C'est le début officiel du projet. Les tâches sont assignées, les ressources sont allouées et le travail commence.
+
+#### Conception
+Dans cette phase, les détails du projet sont élaborés. Cela peut inclure la conception de produits, la rédaction de spécifications ou la création de plans.
+
+#### Réalisation
+C'est la phase où le travail est effectivement réalisé. Cela peut inclure la construction, le codage, le test ou toute autre activité nécessaire pour atteindre les objectifs du projet.
+
+#### Bilan
+C'est la phase finale du projet. Elle comprend l'évaluation des performances, la documentation des leçons apprises et la clôture officielle du projet.
+
+
+
+
 ## Golden circle 
 Le Golden Circle est un modèle conceptuel proposé par Simon Sinek qui explique comment les leaders inspirent la coopération, la confiance et le changement dans une entreprise. 
 
@@ -12,6 +32,7 @@ Il est composé de trois cercles concentriques : Pourquoi (Why), Comment (How) e
 Le Triangle d'Or est un concept de gestion de projet qui met l'accent sur l'équilibre entre trois contraintes : le coût, le temps et la portée. Il est souvent utilisé pour évaluer la qualité d'un projet.
 
 ![Triangle d'or](https://www.manager-go.com/assets/Uploads/triangle-d-or.png)
+
 
 ## Les 4 P de la gestion de projet 
 Les 4 P de la gestion de projet se réfèrent à : 
@@ -72,4 +93,48 @@ L'objectif doit être pertinent et aligné avec les objectifs globaux.
 #### Temporel (Time-bound) : 
 
 L'objectif doit avoir une échéance claire.
-Dans certains cas, un "E" est ajouté à la fin de SMART pour signifier "Évaluable" (Evaluable) ou "Excitant" (Exciting), soulignant l'importité de pouvoir évaluer l'atteinte de l'objectif ou de le rendre motivant.
+
+
+#### Ecologique : 
+L'objectif doit respecter l'environnement 
+
+
+## PERT et Gantt
+
+### Qu'est-ce que PERT ?
+
+PERT (Program Evaluation and Review Technique) est une méthode de gestion de projet qui permet de planifier et de contrôler les tâches d'un projet. Elle est particulièrement utile pour les projets complexes avec de nombreuses tâches interdépendantes.
+
+
+![PERT](https://static3.cegos.fr/content/uploads/2022/08/10111127/PERT-1024x254.png.webp)
+
+### Qu'est-ce que Gantt ?
+
+Le diagramme de Gantt est un outil de gestion de projet qui permet de visualiser l'ensemble des tâches d'un projet sur une ligne de temps. Il montre quand chaque tâche doit commencer et se terminer, ainsi que les dépendances entre les tâches.
+
+![Gantt](https://static3.cegos.fr/content/uploads/2022/08/10111040/Gantt.png.webp)
+
+### Qu'est-ce que le chemin critique ?
+
+Le chemin critique est la séquence de tâches qui détermine la durée totale d'un projet. Si une tâche sur le chemin critique est retardée, tout le projet sera retardé.
+
+### Comment s'applique chaque méthode ?
+
+La méthode PERT utilise un diagramme en réseau pour montrer les dépendances entre les tâches et pour déterminer le chemin critique. Le diagramme de Gantt, quant à lui, utilise une barre horizontale pour représenter chaque tâche, avec la longueur de la barre indiquant la durée de la tâche.
+
+### Quelles sont les différences entre les deux ?
+
+La principale différence entre PERT et Gantt réside dans la façon dont ils représentent les informations. PERT est plus visuel et montre les dépendances entre les tâches, tandis que Gantt est plus simple et montre simplement quand chaque tâche doit commencer et se terminer.
+
+
+|     **Comparaison**      |     **Gantt**      | **PERT**     |
+|-----------------------|-----------------------|---------------------------|
+|*Style de  performance*| Montré dans le graphique à barres|Montré dans l'organigramme (ou diagramme de réseau) |
+| *Usage*| Appliquer aux petits projets | Appliquer à de grands projets et projets complexes  
+|  *Contenu de la performance * | Tâche de projet, début, fin, durée, état d'avancement de chaque tâche |L'ordre de traitement (flux), le temps d'achèvement, le chemin critique   |
+|      *Caractéristiques* |Je ne peux pas afficher les interdépendances entre les tâches et les relations d'interconnexions |Les tâches indépendantes ont de nombreux réseaux de tâches d'interconnexion |
+
+
+### Comment choisir entre les deux ?
+
+Le choix entre PERT et Gantt dépend de la complexité du projet et des préférences du gestionnaire de projet. Si le projet est complexe avec de nombreuses dépendances entre les tâches, PERT peut être plus utile. Si le projet est plus simple, ou si le gestionnaire de projet préfère une représentation plus simple, Gantt peut être préférable.
