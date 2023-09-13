@@ -71,6 +71,28 @@ Le Cycle itératif est une approche de gestion de projet qui divise le projet en
 ### Les méthodes agiles
 Les méthodes agiles sont un ensemble de pratiques de gestion de projet qui favorisent la flexibilité, la collaboration et la satisfaction du client. Elles comprennent des méthodes comme Scrum, Kanban, Lean, XP (Extreme Programming), etc. Ces méthodes permettent des ajustements fréquents et une livraison continue de valeur.
 
+### Différences cycle itératif - méthodes agiles:
+
+Le cycle itératif et les méthodes agiles sont deux approches de développement de logiciels qui mettent l'accent sur la livraison de petites parties fonctionnelles du logiciel sur une période de temps. Cependant, ils diffèrent dans leur approche et leur mise en œuvre.
+
+**Planification** : 
+
+Dans un cycle itératif, la planification se fait au début de chaque itération et reste généralement inchangée tout au long de celle-ci. En revanche, dans les méthodes agiles, la planification est un processus continu et flexible qui peut être ajusté en fonction des commentaires des clients et des utilisateurs.
+
+**Livraison** : 
+
+Dans un cycle itératif, chaque itération produit une version améliorée du produit, mais toutes les fonctionnalités peuvent ne pas être livrées à chaque itération. Dans les méthodes agiles, chaque itération vise à produire une version potentiellement livrable du produit avec un ensemble de fonctionnalités qui apportent de la valeur à l'utilisateur final.
+
+**Interaction avec le client** : 
+
+Dans un cycle itératif, l'interaction avec le client peut ne pas être aussi fréquente ou intensive qu'avec les méthodes agiles. Les méthodes agiles mettent l'accent sur une collaboration étroite et continue avec le client tout au long du processus de développement.
+
+**Gestion des changements** : 
+
+Les cycles itératifs peuvent gérer les changements, mais ils sont généralement incorporés dans la prochaine itération. Les méthodes agiles, en revanche, sont conçues pour accueillir et répondre aux changements rapidement et efficacement à tout moment du processus.
+
+En résumé, bien que les deux approches soient itératives, les méthodes agiles sont plus flexibles et centrées sur le client, tandis que le cycle itératif est plus structuré et séquentiel.
+
 ### SMART(E)
 SMART est un acronyme utilisé pour définir des objectifs clairs et réalisables. Il signifie :
 
