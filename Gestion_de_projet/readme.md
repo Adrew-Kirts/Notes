@@ -138,3 +138,41 @@ La principale différence entre PERT et Gantt réside dans la façon dont ils re
 ### Comment choisir entre les deux ?
 
 Le choix entre PERT et Gantt dépend de la complexité du projet et des préférences du gestionnaire de projet. Si le projet est complexe avec de nombreuses dépendances entre les tâches, PERT peut être plus utile. Si le projet est plus simple, ou si le gestionnaire de projet préfère une représentation plus simple, Gantt peut être préférable.
+
+## SCRUM
+
+Scrum est un cadre agile pour gérer le travail avec un accent sur le développement de logiciels. Il est conçu pour des équipes de trois à neuf membres, qui divisent leur travail en actions qui peuvent être complétées dans des itérations limitées dans le temps, appelées "sprints", ne dépassant pas un mois et le plus souvent deux semaines. Scrum se caractérise par :
+
+#### Transparence : 
+
+Le processus, le travail et les progrès sont visibles par tous.
+
+
+#### Inspection : 
+
+Des vérifications régulières sont effectuées pour assurer le progrès et détecter les écarts.
+
+
+#### Adaptation : 
+
+Si un inspecteur détermine qu'un ou plusieurs aspects d'un processus dévient en dehors des limites acceptables, et que le produit résultant sera inacceptable, le processus ou le matériel en cours de traitement doit être ajusté.
+
+
+### Scrum implique :
+
+
+- Des réunions quotidiennes debout, également connues sous le nom de "scrums quotidiens", pour surveiller les progrès.
+
+
+- Sprints, qui sont les unités de base du développement en Scrum.
+
+
+- Rôles Scrum comprenant le Propriétaire du Produit, le Maître Scrum, et l'Équipe de Développement.
+
+
+- Artéfacts Scrum comme le Backlog du Produit, le Backlog du Sprint, et l'Incément du Produit.
+
+
+- Événements Scrum tels que la Planification du Sprint, le Scrum Quotidien, la Revue du Sprint, et la Rétrospective du Sprint.
+
+L'objectif principal de Scrum est de favoriser une culture de haute performance, de flexibilité et de créativité, et de livrer des produits de valeur de manière itérative et incrémentale.
