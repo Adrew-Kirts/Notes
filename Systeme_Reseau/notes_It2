@@ -1,0 +1,277 @@
+# Système & réseaux
+
+## Itération 2
+
+
+### Objectifs pédagogiques
+
+● Comprendre comment se connecter à un serveur distant avec SSH
+
+● Comprendre comment effectuer une mise en production “classique” sans conteneurisation
+
+● Comprendre les limites d’une mise en production “classique”
+
+● Comprendre l’utilité de la conteneurisation avec l’outil Docker
+
+● Comprendre comment effectuer une mise en production de conteneur
+
+● Comprendre les notions de CI/CD et développer une pipeline pour l’automatisation de la mise en production
+
+
+### SSH
+
+    SSH, ou Secure Shell, est un protocole cryptographique utilisé pour opérer des
+    services réseau de manière sécurisée. Il a été inventé par Tatu Ylönen en 1995, en
+    réponse à un piratage de mot de passe dans le réseau de son université.
+    SSH fonctionne en mode client-serveur. Le serveur SSH écoute sur un port
+    spécifique, généralement le port 22, pour les connexions entrantes. Une fois la
+    connexion établie, l'authentification est réalisée, soit par mot de passe, soit par clés
+    publiques/privées. Après une authentification réussie, un shell sécurisé ou une session
+    de commande est établie, permettant l'exécution de commandes à distance.
+    Pour ce faire, SSH utilise des mécanismes d’encryption symétriques et
+    asymétriques.
+
+---
+    ➔ Les protocoles qui ont été remplacés par SSH :
+
+SSH (Secure Shell) a été conçu pour remplacer plusieurs protocoles non sécurisés utilisés pour la gestion à distance des systèmes, notamment :
+
+**Telnet** : Un protocole de réseau utilisé sur Internet ou un réseau local pour fournir un terminal textuel bidirectionnel interactif.
+
+
+**Rlogin** (Remote Login) : Utilisé pour permettre à un utilisateur de se connecter à un autre ordinateur sur le réseau.
+
+
+**RSH** (Remote Shell) : Permet l'exécution de commandes non interactives sur un système distant.
+
+
+**FTP** (File Transfer Protocol) : Utilisé pour le transfert de fichiers entre un client et un serveur sur un réseau informatique.
+
+    ➔ Les différents modes d'utilisation de SSH :
+
+SSH peut être utilisé de plusieurs façons, notamment :
+
+**Session interactive** : 
+
+SSH peut être utilisé pour ouvrir une session interactive avec un autre système. C'est l'utilisation la plus courante de SSH.
+
+
+**Exécution de commandes à distance** : 
+
+SSH peut être utilisé pour exécuter une commande spécifique sur un système distant sans ouvrir une session interactive.
+
+**Tunneling** : 
+
+SSH peut être utilisé pour créer un tunnel sécurisé pour d'autres protocoles de communication.
+
+
+**Transfert de fichiers** : 
+
+SSH peut être utilisé pour transférer des fichiers de manière sécurisée entre des systèmes distants. Cela est généralement réalisé en utilisant les protocoles SCP ou SFTP qui sont basés sur SSH.
+
+**Authentification par clé**: 
+
+Pour une sécurité accrue, SSH prend en charge l'authentification par clé, où une paire de clés publique/privée est utilisée pour l'authentification au lieu d'un mot de passe.
+
+----
+
+
+    ➔ Établissement d'une connexion SSH entre un client et un serveur :
+
+Voici un schéma simplifié de la façon dont une connexion SSH est établie entre un client et un serveur :
+
+1. Le client SSH initie une connexion au serveur SSH.
+
+2. Le serveur SSH répond en envoyant sa clé publique au client SSH.
+
+3. Le client SSH utilise cette clé publique pour chiffrer un secret partagé et l'envoie au serveur SSH.
+
+4. Le serveur SSH utilise sa clé privée pour déchiffrer le secret partagé.
+
+5. Le secret partagé est maintenant utilisé pour établir une session sécurisée entre le client et le serveur.
+
+X. Pour une sécurité accrue, l'authentification par clé peut être utilisée. Dans ce cas, le client SSH envoie également sa clé publique au serveur SSH. Le serveur SSH doit avoir une copie de cette clé publique et l'utilise pour vérifier l'identité du client SSH.
+
+```
+
+Client SSH                             Serveur SSH
+     |                                      |
+     |----- Initie une connexion ---------> |
+     |                                      |
+     |<---- Envoie sa clé publique -------- |
+     |                                      |
+     | - Utilise la clé publique pour       |
+     |   chiffrer un secret partagé         |
+     |                                      |
+     |----- Envoie le secret chiffré -----> |
+     |                                      |
+     | - Utilise sa clé privée pour         |
+     |   déchiffrer le secret partagé       |
+     |                                      |
+     |<---- Session sécurisée établie ----- |
+     |                                      |
+     | - Pour une sécurité accrue,          |
+     |   authentification par clé           |
+     |                                      |
+     |----- Envoie sa clé publique -------> |
+     |                                      |
+     | - Doit avoir une copie de cette      |
+     |   clé publique pour vérifier         |
+     |   l'identité du client               |
+     |                                      |
+
+```
+
+
+## Echanger les clés public/privé
+
+
+Pour établir une connexion SSH sécurisée, nous devons d'abord générer une paire de clés public/privé sur le client, puis copier la clé publique sur le serveur.
+
+Générer une paire de clés
+
+Si vous n'avez pas déjà une paire de clés SSH, vous pouvez en créer une en utilisant la commande ssh-keygen. Par défaut, cela créera une clé RSA de 2048 bits.
+```
+ssh-keygen
+```
+Lorsque vous exécutez cette commande, elle vous demandera où sauvegarder la clé (par défaut dans ~/.ssh/id_rsa), et vous aurez la possibilité de définir une passphrase pour une sécurité supplémentaire.
+
+Copier la clé publique sur le serveur
+Une fois que vous avez généré votre paire de clés, vous devez copier la clé publique sur le serveur auquel vous souhaitez vous connecter. Vous pouvez le faire en utilisant la commande ssh-copy-id.
+```
+ssh-copy-id username@remote_host
+```
+
+Cette commande copiera votre clé publique dans le fichier ~/.ssh/authorized_keys sur le serveur distant. Une fois cela fait, vous pourrez vous connecter au serveur en utilisant votre clé privée pour l'authentification.
+
+## Commandes basiques unix
+
+**Navigation et gestion de fichiers**
+
+ls : Liste les fichiers et les répertoires dans le répertoire courant.
+Exemple : ls affiche tous les fichiers et répertoires dans le répertoire courant.
+
+cd : Change le répertoire courant. Exemple : cd Documents change le répertoire courant vers le répertoire Documents.
+
+pwd : Affiche le chemin du répertoire courant. Exemple : pwd affiche le chemin complet du répertoire courant.
+
+**Manipulation de fichiers et de répertoires**
+
+cp : Copie des fichiers et des répertoires. Exemple : cp source.txt destination.txt copie le fichier source.txt vers destination.txt.
+
+mkdir : Crée un nouveau répertoire. Exemple : mkdir new_directory crée un nouveau répertoire nommé new_directory.
+
+touch : Crée un nouveau fichier vide. Exemple : touch new_file.txt crée un nouveau fichier vide nommé new_file.txt.
+
+mv : Déplace ou renomme des fichiers et des répertoires. Exemple : mv old_name.txt new_name.txt renomme le fichier old_name.txt en new_name.txt.
+
+rm : Removes files. Example: rm file.txt removes the file named file.txt.
+
+rmdir : Removes empty directories. Example: rmdir directory removes the directory if it is empty.
+
+rm -r or rm -R : Removes directories and their contents recursively. Example: rm -r directory removes the directory and its contents recursively.
+
+rm -f : Forces removal of files without prompting for confirmation. Example: rm -f file.txt forces removal of the file named file.txt without prompting.
+
+rm -rf : Forces removal of directories and their contents recursively without prompting for confirmation. Example: rm -rf directory forces removal of the directory and its contents recursively without prompting.
+
+
+**Affichage et lecture de contenu de fichier**
+
+cat : Affiche le contenu d'un fichier. Exemple : cat file.txt affiche le contenu du fichier file.txt.
+
+less : Permet de visualiser le contenu d'un fichier page par page. Exemple : less file.txt affiche le contenu du fichier file.txt page par page.
+
+find : Recherche des fichiers et des répertoires. Exemple : find . -name "*.txt" recherche tous les fichiers .txt dans le répertoire courant et ses sous-répertoires.
+
+grep : Recherche une chaîne de caractères dans un ou plusieurs fichiers. Exemple : grep "search_term" file.txt recherche "search_term" dans le fichier file.txt.
+
+**Transfert et synchronisation de fichiers**
+
+scp : Copie des fichiers entre des hôtes sur un réseau. Exemple : scp source.txt user@host:destination.txt copie le fichier source.txt vers destination.txt sur l'hôte distant.
+
+rsync : Synchronise des fichiers et des répertoires entre deux emplacements. Exemple : rsync -av source_directory/ destination_directory/ synchronise le contenu de source_directory avec destination_directory.
+
+**Editeur de texte**
+
+vim : Un éditeur de texte en ligne de commande. Exemple : vim file.txt ouvre le fichier file.txt dans l'éditeur vim.
+
+nano : Un autre éditeur de texte en ligne de commande, généralement considéré comme plus facile à utiliser pour les débutants que vim. Exemple : nano file.txt ouvre le fichier file.txt dans l'éditeur nano.
+
+### PHP-FPM
+
+PHP-FPM (FastCGI Process Manager) est une alternative à la gestion de FastCGI pour PHP. Il est utile pour les sites qui ont besoin de performances élevées et sont capables de traiter beaucoup de requêtes simultanément. PHP-FPM maintient des pools (des travailleurs qui peuvent répondre aux requêtes PHP) pour traiter les requêtes PHP.
+
+PHP-FPM offre plusieurs avantages :
+
+Il peut gérer des milliers de requêtes simultanées.
+
+Il a une faible empreinte mémoire.
+
+Il offre des capacités de gestion avancées (par exemple, il peut démarrer des travailleurs en cas de besoin).
+
+Il est capable de s'adapter à la charge du serveur.
+
+Exemple d'utilisation : Si vous avez un site web basé sur PHP qui reçoit beaucoup de trafic, vous pouvez utiliser PHP-FPM pour améliorer les performances de votre site.
+
+### NGINX
+
+NGINX est un serveur web open source qui peut également être utilisé comme un proxy inverse, un équilibreur de charge, un proxy de messagerie et un serveur de cache HTTP. NGINX est connu pour sa haute performance, sa stabilité, ses riches fonctionnalités, sa configuration simple et sa faible consommation de ressources.
+
+NGINX offre plusieurs avantages :
+
+Il peut servir des milliers de requêtes simultanées avec une faible utilisation de la mémoire.
+
+Il offre des fonctionnalités avancées de mise en cache et d'équilibrage de charge.
+
+Il peut également servir de proxy pour passer des requêtes à des serveurs d'application (par exemple, PHP-FPM).
+
+Exemple d'utilisation : Si vous avez un site web qui reçoit beaucoup de trafic, vous pouvez utiliser NGINX comme serveur web pour servir votre contenu statique rapidement, et comme proxy inverse pour passer les requêtes PHP à PHP-FPM.
+
+### Schéma de l'interaction entre PHP-FPM, NGINX et code source
+
+
+```
+Utilisateur (navigateur) 
+        |
+        |---- Requête HTTP (GET /) ----> 
+        |
+    Nginx (serveur web)
+        |
+        |---- Requête PHP ----> 
+        |
+    PHP-FPM (gestionnaire de processus)
+        |
+        |---- Exécute le script PHP ----> 
+        |
+    Le code source (par exemple, index.php)
+        |
+        |---- Renvoie le résultat ----> 
+        |
+    PHP-FPM
+        |
+        |---- Renvoie le résultat ----> 
+        |
+    Nginx
+        |
+        |---- Renvoie la réponse HTTP ----> 
+        |
+Utilisateur (navigateur)
+
+```
+
+Sites utilisé : 
+
+Install NGINX:
+https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
+
+https://www.rosehosting.com/blog/how-to-install-php-7-4-with-nginx-on-ubuntu-20-04/
+
+Install multiple verions of PHP:
+
+https://help.clouding.io/hc/en-us/articles/360021630059-How-to-Install-Multiple-PHP-Versions-7-2-7-4-8-0-and-8-1-on-Ubuntu-20-04
+
+NGINX config file:
+
+https://stackoverflow.com/questions/70397329/nginx-how-to-host-different-sites-to-the-same-domain-but-on-different-ports
+
