@@ -291,7 +291,7 @@ Avec la diversité des technologies, la maintenance et la mise à jour de chaque
 
 ---
 
-Sites utilisé pour installer NGINX et son configuration (port 80 et port 81) : 
+Sites utilisés pour installer NGINX et son configuration (port 80 et port 81) : 
 
 Install NGINX:
 https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
@@ -403,10 +403,73 @@ un fichier docker-compose qui va décrire la configuration du conteneur pour
 PHP et le conteneur MySQL. Cela va éviter de lancer les commandes à la main
 et permettre d’avoir un suivi dans Git.
 
+### Utiliser Docker (ex. installer NGINX)
+
+Télécharger image NGINX
+
+```
+$ docker pull nginx:latest
+```
+Optionnel: voir l'image téléchargé
+```
+$ docker images
+```
+Lancer container (en spécifiant le port 8080)
+```
+$ docker run -p 8080:80 nginx
+```
+Voir que l'image nginx tourne
+```
+$ docker ps
+```
+*Ou bien: localhost:8080*
+
+
+➔ Quelle est la différence entre une image Docker et un conteneur ?
+
+Image Docker : 
+
+Une image Docker est un modèle immuable, un peu comme un "snapshot" qui contient un système de fichiers complet avec tout ce dont une application a besoin pour s'exécuter : le code, les bibliothèques, les variables d'environnement, les fichiers de configuration, etc. Les images Docker sont utilisées pour créer des conteneurs Docker. Elles sont souvent construites à partir d'un fichier Dockerfile, qui contient un ensemble d'instructions pour créer l'image.
+
+Conteneur Docker : 
+
+Un conteneur Docker est une instance exécutable et mutable d'une image Docker. On peut considérer un conteneur comme une version en cours d'exécution d'une image Docker. Il encapsule l'application et son environnement d'exécution. On peut créer, démarrer, arrêter, déplacer ou supprimer un conteneur en utilisant l'API Docker ou la CLI Docker, et il est isolé du système hôte et des autres conteneurs.
+
+En résumé, une image Docker est comme une recette de cuisine, tandis qu'un conteneur Docker est comme le plat cuisiné à partir de cette recette. Vous pouvez utiliser la même recette (image Docker) pour cuisiner le plat (créer un conteneur) autant de fois que vous le souhaitez.
+
+
+➔ Que fait Docker si l'image demandée n'est pas présente localement?
+
+Si l'image Docker demandée n'est pas présente localement sur votre machine, Docker va essayer de la télécharger depuis un registre Docker distant. Par défaut, Docker utilise Docker Hub, qui est un service de cloud public qui contient des images Docker préconstruites que vous pouvez télécharger et utiliser.
+
+
 ### Liste de commandes utiles Docker
 
 ```
+
+UBUNTU
+
+    List all used ports
+sudo lsof -i -P -n | grep LISTEN
+
+
+IMAGES
+    Build an Image from a Dockerfile
+docker build -t <image_name>
+
+    List local images
+docker images
+
 CONTAINERS
+
+    Create and run a container from an image, with a custom name:
+docker run --name <container_name> <image_name>
+
+    Run a container with and publish a container’s port(s) to the host.
+docker run -p <host_port>:<container_port> <image_name>
+
+    Run a container in daemon mode with and publish a container’s port(s) to the host.
+docker run -d -p <host_port>:<container_port> <image_name>
 
     To inspect a running container:
 docker inspect <container_name> (or <container_id>)
@@ -430,3 +493,151 @@ docker search <image_name>
 docker pull <image_name>
 
 ```
+
+
+ ## Lancer MariaDB container
+
+```
+docker run -d -p 3306:3306 -e MARIADB_USER=user -e MARIADB_PASSWORD=password -e MARIADB_ROOT_PASSWORD=secret-password -e MARIADB_DATABASE=mydatabase mariadb
+```
+
+Pour lancer MariaDB avec la persistance des données: ("-v")
+```
+docker run -d -p 3306:3306 -e MARIADB_USER=user -e MARIADB_PASSWORD=password -e MARIADB_ROOT_PASSWORD=secret-password -e MARIADB_DATABASE=mydatabase -v /path/on/host/mariadb:/var/lib/mysql -v /path/on/host/mariadb/conf.d:/etc/mysql/conf.d mariadb
+```
+
+### Sites utilisés:
+
+https://hub.docker.com/_/mariadb
+
+
+    ➔ Comprendre le principe de volume docker
+
+Les volumes Docker sont un moyen de stocker des données persistantes dans un conteneur Docker et de les partager entre différents conteneurs si souhaité. Les volumes sont stockés localement sur la machine hôte.
+
+```
+-v /path/on/host/mariadb:/var/lib/mysql -v /path/on/host/mariadb/conf.d:/etc/mysql/conf.d mariadb
+```
+
+L'option -v est utilisée pour monter un répertoire sur l'ordinateur hôte dans un répertoire à l'intérieur du conteneur. Dans ce cas, le répertoire /path/on/host/mariadb sur l'ordinateur hôte est monté dans le répertoire /var/lib/mysql à l'intérieur du conteneur. Cela permet de stocker des données de manière persistante sur l'ordinateur hôte et d'y accéder à partir du conteneur.
+
+Le répertoire /path/on/host/mariadb/conf.d sur l'ordinateur hôte est monté dans le répertoire /etc/mysql/conf.d à l'intérieur du conteneur. Ce qui permet de stocker des fichiers de configuration sur l'ordinateur hôte et d'y accéder à partir du conteneur.
+
+    ➔ Quelle est la différence entre une application statefull et stateless
+
+Une application **stateful** est une application qui conserve l'état de la session de l'utilisateur. Cela signifie que l'application se souvient des interactions précédentes et utilise ces informations pour déterminer ce qui se passe ensuite. Les applications stateful peuvent être plus complexes à développer et à maintenir, mais elles offrent une expérience utilisateur plus personnalisée.
+
+Par exemple, si vous vous connectez à un service en ligne et que vous ajoutez des articles à votre panier, puis que vous fermez votre navigateur et que vous revenez plus tard, vos articles sont toujours dans votre panier. 
+
+Une application **stateless**, en revanche, ne conserve pas l'état de la session de l'utilisateur. Chaque requête est traitée indépendamment des autres. Les applications stateless sont plus faciles à développer et à maintenir, mais elles peuvent ne pas offrir la même expérience utilisateur personnalisée.
+
+
+## Lancement d'une application multi-conteneur
+
+"Pour faciliter la gestion de ce type d’application, on peut utiliser docker-compose. Avec
+Docker Compose, vous pouvez utiliser un fichier docker-compose.yml pour
+configurer les services de votre application. Plutôt que de gérer chaque conteneur
+individuellement, Docker Compose vous permet de gérer et d'interconnecter plusieurs
+conteneurs comme s'ils étaient une seule application."
+
+● **Fichier docker-compose.yml** : Le cœur de Docker Compose est le fichier
+YAML qui décrit la structure et les paramètres des services, des réseaux et des volumes.
+
+● **Services** : Dans Docker Compose, chaque conteneur est décrit comme un
+"service". Chaque service est une configuration pour un conteneur particulier et
+son image.
+
+● **Commande up** : Avec la commande docker-compose up, vous pouvez démarrer
+tous les services définis dans le fichier docker-compose.yml.
+
+● **Intégration avec Docker** : Docker Compose travaille avec Docker, ce qui signifie
+que toutes les commandes et fonctionnalités de Docker sont également
+accessibles.
+
+
+#### Création du fichier docker-compose.yml
+
+```
+services:
+  wordpress:
+    image: wordpress:latest
+    links:
+      - mariadb:mysql
+    environment:
+      - WORDPRESS_DB_USER=root
+      - WORDPRESS_DB_PASSWORD=password
+    ports:
+      - 80:80
+    volumes:
+      -./html:/var/www/html
+
+  mariadb:
+    image: mariadb:10.6.4-focal
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+      - MYSQL_DATABASE=wordpress
+    volumes:
+      -./database:/var/lib/mysql
+```
+
+
+#### Lancement des conteneurs
+```
+docker-compose up -d
+```
+
+➔ Comment configurez-vous les variables d’environnement?
+
+
+➔ Comment l’application wordpress communique-t-elle avec le conteneur
+MariaDB ?
+
+La configuration de la communication entre l'application Wordpress et le conteneur MariaDB est gérée par les liens Docker. Le service Wordpress est lié au service MariaDB en utilisant le nom "mysql". Cela signifie que le service Wordpress peut utiliser l'adresse IP du service MariaDB pour se connecter à la base de données, mais l'adresse IP est en réalité masquée derrière l'adresse IP du conteneur.
+
+
+### Ecrire un image Docker
+
+Dockerfile
+
+```
+FROM node:18
+# Create app directory
+WORKDIR /app
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+COPY package*.json ./
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --omit=dev
+# Bundle app source
+COPY . .
+EXPOSE 3000
+CMD [ "node", "app.js" ]
+```
+
+Builder l'image: *Le -t flag est utilisé pour tagger l'image pour le retrouver plus facilement*
+
+```
+docker build . -t <your username>/node-web-app
+```
+
+
+
+Docker compose file: 
+```
+version: '3'
+
+services:
+  web:
+    image: ezra/node-web-app
+    ports:
+      - "3000:3000"
+```
+
+Site utilisé: 
+
+https://nodejs.org/fr/docs/guides/nodejs-docker-webapp
+
+
+---
+
