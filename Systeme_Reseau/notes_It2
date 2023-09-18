@@ -260,7 +260,38 @@ Utilisateur (navigateur)
 
 ```
 
-Sites utilisé : 
+### Limites des cette approche
+
+    ➔ Quelles sont les problématiques qui vont survenir par rapport à la gestion
+    des différents code source (notamment par rapport à la diversité des
+    technologies)?
+
+La gestion de différents codes sources sur un serveur avec PHP-FPM et Nginx peut présenter plusieurs problématiques, notamment en raison de la diversité des technologies.
+
+Compatibilité des versions : 
+
+Différentes applications peuvent nécessiter différentes versions de PHP, ce qui peut entraîner des problèmes de compatibilité. PHP-FPM permet de gérer plusieurs versions de PHP, mais cela nécessite une configuration appropriée.
+
+Gestion des dépendances : 
+
+Chaque application peut avoir ses propres dépendances, qui peuvent entrer en conflit avec celles d'autres applications. Des outils comme Composer peuvent aider à gérer les dépendances PHP, mais ils doivent être utilisés correctement.
+
+Configuration de Nginx : 
+
+Nginx doit être correctement configuré pour chaque application, ce qui peut être complexe si les applications utilisent différentes technologies. Par exemple, la configuration pour une application PHP peut être différente de celle pour une application Node.js.
+
+Sécurité : 
+
+Chaque technologie peut avoir ses propres vulnérabilités, ce qui peut rendre la gestion de la sécurité plus complexe. Il est important de maintenir toutes les technologies à jour et de suivre les meilleures pratiques de sécurité pour chaque technologie.
+
+Maintenance et mise à jour : 
+
+Avec la diversité des technologies, la maintenance et la mise à jour de chaque technologie peut devenir une tâche ardue. Chaque technologie peut avoir son propre cycle de mise à jour et ses propres exigences de maintenance.
+
+
+---
+
+Sites utilisé pour installer NGINX et son configuration (port 80 et port 81) : 
 
 Install NGINX:
 https://www.digitalocean.com/community/tutorials/how-to-install-nginx-on-ubuntu-20-04
@@ -275,3 +306,127 @@ NGINX config file:
 
 https://stackoverflow.com/questions/70397329/nginx-how-to-host-different-sites-to-the-same-domain-but-on-different-ports
 
+
+### Accès au serveur
+
+$ ssh ezra@212.47.236.105 (clé partagé)
+
+### config utilisé: 
+
+```
+ezra@instance-ezra:/etc/nginx/sites-available$ cat example 
+server {
+    listen 80;
+    server_name 212.47.236.105;
+    root /var/www/html/devops-training-php-7;
+    index index.php;
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php7.4-fpm.sock;
+    }
+}
+
+server {
+    listen 81;
+    server_name 212.47.236.105;
+    root /var/www/html/devops-training-php-8;
+    index index.php;
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.0-fpm.sock;
+    }
+}
+
+```
+
+---
+
+## Kit 3, objectifs:
+
+● Savoir créer un Dockerfile
+
+● Savoir utiliser les lignes de commandes Docker
+
+● Savoir utiliser Docker-compose
+
+● Savoir utiliser une régistry Docker
+
+● Savoir déployer un site de bout en bout (du build jusqu’à la mise en production)
+
+● Pouvoir mettre en place Traefik pour du reverse proxy
+
+---
+
+    ➔ Faites une recherche sur les différents avantages qu’apporte la
+    conteneurisation et essayé d’expliquer les grands principes avec vos mots
+
+
+La conteneurisation est une méthode qui permet de déployer des applications prédéfini dans une sorte de config file (Dockerfile). Les containers sont indépendant des autres et peuvent être installé et déplacé à d'autres sytèmes sans avoir de souci sur les éventuelles différences d'environnements.
+Les containers sont plus plus légers que des VM car ils utilisent le même OS que l'environnement ou ils ont été déployés.
+
+
+### Docker - les concepts de base
+
+● Image : Une image Docker est un modèle immuable utilisé pour créer un
+conteneur. Elle contient le code source de l'application, les bibliothèques, les
+dépendances et autres fichiers nécessaires à l'exécution de l'application.
+
+● Dockerfile : C'est un fichier de script qui contient les instructions pour
+construire une image Docker.
+
+● Conteneur : Un conteneur est une instance exécutable d'une image Docker. Il
+s'agit d'une encapsulation légère d'une application et de son environnement
+d'exécution, fonctionnant de manière isolée sur le système hôte.
+
+● Registry : Zone de stockage pour les images Docker. Il peut être public ou privé
+(pour une utilisation interne en entreprise par exemple). Docker Hub est un
+service cloud public pour partager et stocker des images Docker. C'est comme
+un "GitHub" pour les images Docker, où les développeurs peuvent push ou pull
+des images.
+
+● Volume : Les volumes sont utilisés pour persister les données et partager des
+fichiers entre le conteneur et l'hôte. Ils sont essentiels pour éviter la perte de
+données lorsque les conteneurs sont arrêtés ou supprimés.
+
+● Réseau Docker : Docker possède sa propre gestion du réseau, permettant aux
+conteneurs de communiquer entre eux et avec des ressources extérieures. Il
+offre plusieurs modes réseau comme "bridge","host" et"overlay"
+
+● Docker Compose : C'est un outil pour définir et gérer des applications
+multi-conteneurs. Avec Docker Compose, on peut définir une application à
+l'aide de plusieurs conteneurs dans un seul fichier, puis démarrer ces conteneurs
+simultanément avec une seule commande. Par exemple, vous voulez déployer
+une application PHP qui utilise une base de données MySQL. Vous allez écrire
+un fichier docker-compose qui va décrire la configuration du conteneur pour
+PHP et le conteneur MySQL. Cela va éviter de lancer les commandes à la main
+et permettre d’avoir un suivi dans Git.
+
+### Liste de commandes utiles Docker
+
+```
+CONTAINERS
+
+    To inspect a running container:
+docker inspect <container_name> (or <container_id>)
+
+    To list currently running containers:
+docker ps
+
+    List all docker containers (running and stopped):
+docker ps --all
+
+    View resource usage stats
+docker container stats
+
+
+DOCKER HUB
+
+    Search Hub for an image
+docker search <image_name>
+
+    Pull an image from a Docker Hub
+docker pull <image_name>
+
+```
