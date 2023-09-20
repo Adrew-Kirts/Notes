@@ -667,7 +667,7 @@ docker build . -t <your username>/node-web-app
 
 
 
-Docker compose file: 
+Docker compose file (docker-compose.yml): 
 ```
 version: '3'
 
@@ -756,3 +756,138 @@ docker build . -t ezra/php7-nginx-src_code
 ```
 docker run -p 80:80 ezra/php7-nginx-src_code
 ```
+
+### Pusher un image sur un registry 
+
+Login sur registry serveur:
+```
+user@user-HP-ProDesk-600-G3-SFF:~$ docker login https://registry.williamburillon.com
+Username: registry
+Password: 
+```
+
+Dans mon cas particulier il fallait supprimer le config.json car j'avais déjà essayé de me connecter au registry avant la mise en place des user et mot de passes:
+
+```
+user@user-HP-ProDesk-600-G3-SFF:~$ rm -f .docker/config.json 
+```
+
+Il faut ensuite tagger l'image que nous souhaitons push sur le registry. Dans ce cas je (re)tag l'image déjà existant
+
+```
+pattern:
+**docker tag SOURCE_IMAGE[:TAG] TARGET_IMAGE[:TAG]**
+
+commande utilisé:
+docker tag 6fdae1345a5a registry.williamburillon.com/ezra/php7-nginx-src_code
+```
+
+Et pour pusher l'image au registry (ce qui utilise le tag de default "latest")
+
+```
+docker push registry.williamburillon.com/ezra/php7-nginx-src_code
+```
+
+### Installation sur le serveur 
+
+- Connection au serveur 
+- Création de docker-compose file
+```
+services:
+  web:
+    image: ezra/php7-nginx-src_code
+    ports:
+      - "80:80"
+
+```
+- login sur registry privé 
+- 
+
+
+## Traefik 
+
+    ➔ Avec les explications fournies par votre formateur, expliquez ce qu’il se passe quand l’utilisateur fait une requête à l’url https://app-2.example.com
+
+L'url utilisé HTTPS donc le port utilisé est le 443. L'entrypoint HTTPS est utilisé pour passer au routeur. Dans le router le rule Host est active. Quand cette règle est verifié (il verifie si le domaine de requete correspond) le router devient actif, appelle le(s) middleware et transfere la requete au service (container app-2).
+
+
+Docker-compose file pour traefik:
+
+```
+version: '3'
+
+services:
+  traefik:
+    image: traefik:latest
+    restart: always
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
+      - "traefik.http.routers.api.rule=Host(`traefik.ezra.dev-log-campus.net`)"
+      - "traefik.http.routers.api.entrypoints=http,https" 
+      - "traefik.http.routers.api.service=api@internal"
+    command:
+      - --providers.docker
+      - --providers.docker.exposedbydefault=false
+      - --entrypoints.http.address=:80
+      - --entrypoints.https.address=:443
+      - --certificatesresolvers.le.acme.email=your-email@example.com
+      - --certificatesresolvers.le.acme.storage=/certificates/acme.json
+      - --certificatesresolvers.le.acme.tlschallenge=true
+      - --accesslog
+      - --log
+      - --api.insecure=true
+      - --api.dashboard=true
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik-public-certificates:/certificates
+    networks:
+      - traefik-public
+
+volumes:
+  traefik-public-certificates:
+
+networks:
+  traefik-public:
+    external: true
+
+```
+
+Docker-compose file pour php7:
+
+```
+version: '3'
+
+services:
+  web:
+    image: registry.williamburillon.com/ezra/php7-nginx-src_code
+    ports:
+      - "82:80"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`php7.ezra.dev-log-campus.net`)"
+      - "traefik.http.routers.web.entrypoints=http"
+      - "traefik.docker.network=traefik-public"
+      - "traefik.http.services.web.loadbalancer.server.port=80"
+    networks:
+      - traefik-public
+
+networks:
+  traefik-public:
+    external: true
+
+```
+
+Dans cloudflare le DNS pour le nom de domaine de **dev-log-campus.net** est configuré de façon suivant:
+
+Type: A
+
+Nom: *.ezra
+
+Ip: 212.47.236.105
