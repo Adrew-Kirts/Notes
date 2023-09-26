@@ -34,7 +34,44 @@ Environnement NodeJS/NPM
 
 ***let*** - permet de déclarer une variable dont la portée est celle du bloc courant, éventuellement en initialisant sa valeur.
 
-**const** - 
+**const** - la valeur d'une constante ne peut pas être modifiée par des réaffectations ultérieures. Une constante ne peut pas être déclarée à nouveau.
+
+**.this** - Dans une fonction *classique*, this fait référence à l'objet lui-même. Cela signifie que si vous appelez une fonction sur un objet, this fera référence à cet objet.
+
+Dans une fonction *fléchée*, this fait référence à l'objet à l'intérieur de la fonction elle-même. Cela signifie que si vous appelez une fonction fléchée sur un objet, this fera référence à l'objet à l'intérieur de la fonction fléchée.
+
+```
+class Personne {
+  constructor(nom, age) {
+    this.nom = nom;
+    this.age = age;
+  }
+
+  afficheAge() {
+    console.log(this.age);
+  }
+}
+
+const personne1 = new Personne("Alice", 25);
+personne1.afficheAge(); // affiche 25
+```
+
+Dans cet exemple, this fait référence à l'objet personne1 lorsque la méthode afficheAge() est appelée.
+
+```
+const personne2 = {
+  nom: "Bob",
+  age: 30,
+  afficheAge() {
+    console.log(this.age);
+  }
+};
+
+const afficheAge = personne2.afficheAge;
+afficheAge(); // affiche 30
+```
+
+Dans cet exemple, this fait référence à l'objet personne2 à l'intérieur de la fonction fléchée
 
 **fonctions flechées** - les fonctions flechées sont une syntaxe plus concise pour définir des fonctions. Elles sont souvent utilisées en JavaScript pour définir des fonctions anonymes.
 
@@ -139,4 +176,11 @@ const promise = new Promise((resolve, reject) => {
   }
 });
 ```
+
+
+### Async/await
+
+Le mot-clé *async* function peut être utilisé pour définir une fonction asynchrone au sein d'une expression.
+
+L'expression *await* interrompt l'éxecution d'une fonction asynchrone et attend la résolution d'une promesse
 
